@@ -1,13 +1,10 @@
 const Header = () => {
   return (
-    <div className="border-b-[1px] p-5 flex flex-row gap-5 justify-between mb-5">
-      <div>
-        <a href="#about">Yeabsira Driba</a>
+    <div className="border-b-[1px] py-5 px-12 flex flex-row gap-8 justify-between mb-5">
+      <div className="text-2xl">
+        <a href="/">Yeabsira Driba</a>
       </div>
-      <div className="flex flex-row justify-between">
-        <div>
-          <a href="/">Home</a>
-        </div>
+      <div className="flex flex-row justify-between space-x-5">
         <div>
           <a href="#about">About</a>
         </div>
