@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiMail } from "react-icons/fi";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
+import { FiExternalLink } from "react-icons/fi";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import cv from "./data/cv";
@@ -29,23 +30,6 @@ function App() {
     awardsAndActivities,
   } = cv;
 
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [formStatus, setFormStatus] = useState("");
-
-  const submitMessage = (e) => {
-    e.preventDefault();
-    setFormStatus("Opening your email client...");
-
-    const subject = `Message from ${form.name || "someone"}`;
-    const body = `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}\n`;
-
-    const mailtoUrl = `mailto:${contact.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailtoUrl;
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-white text-neutral-800 relative overflow-hidden">
       <div
@@ -58,7 +42,7 @@ function App() {
       />
 
       <div className="relative flex flex-col min-h-screen">
-        <Header />
+      <Header />
 
         <main className="flex-1">
           <div className="mx-auto max-w-6xl px-6 md:px-12 py-10">
@@ -99,20 +83,6 @@ function App() {
 
                           <a
                             className="group relative inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-2xl transition-transform hover:scale-[1.03]"
-                            href={`https://github.com/${contact.githubUsername}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label={`GitHub ${contact.githubUsername}`}
-                          >
-                            <span className="pointer-events-none absolute inset-0 rounded-2xl bg-neutral-200/80 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <span className="pointer-events-none absolute left-1/2 -top-3 -translate-x-1/2 whitespace-nowrap rounded-lg bg-neutral-900 px-2 py-1 text-xs text-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity z-[60]">
-                              GitHub
-                            </span>
-                            <FaGithub className="relative z-10 w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-neutral-900" />
-                          </a>
-
-                          <a
-                            className="group relative inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-2xl transition-transform hover:scale-[1.03]"
                             href={`https://www.linkedin.com/in/${contact.linkedinUsername}`}
                             target="_blank"
                             rel="noreferrer"
@@ -123,6 +93,20 @@ function App() {
                               LinkedIn
                             </span>
                           <FaLinkedinIn className="relative z-10 w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-neutral-900" />
+                          </a>
+
+                          <a
+                            className="group relative inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-2xl transition-transform hover:scale-[1.03]"
+                            href={`https://github.com/${contact.githubUsername}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={`GitHub ${contact.githubUsername}`}
+                          >
+                            <span className="pointer-events-none absolute inset-0 rounded-2xl bg-neutral-200/80 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <span className="pointer-events-none absolute left-1/2 -top-3 -translate-x-1/2 whitespace-nowrap rounded-lg bg-neutral-900 px-2 py-1 text-xs text-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity z-[60]">
+                              GitHub
+                            </span>
+                            <FaGithub className="relative z-10 w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-neutral-900" />
                           </a>
 
                           <a
@@ -216,21 +200,45 @@ function App() {
                 {projects.map((p, idx) => (
                   <div
                     key={p.name}
-                    className={[
-                      "rounded-2xl border bg-white/70 p-5",
-                      idx % 2 === 0 ? "border-neutral-200" : "border-neutral-300",
-                    ].join(" ")}
+                    className="relative rounded-3xl border border-neutral-200 bg-white/80 p-5 md:p-6 shadow-sm hover:-translate-y-0.5 transition-transform"
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="font-semibold tracking-tight text-neutral-900">
-                        {p.name}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full border border-neutral-200 opacity-50"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -left-10 -bottom-10 h-28 w-28 rounded-full border border-neutral-200 opacity-30"
+                    />
+
+                    <div className="relative flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="text-xs uppercase tracking-wide text-neutral-500">
+                          Project
+                        </div>
+                        <div className="font-semibold tracking-tight text-neutral-900 truncate">
+                          {p.name}
+                        </div>
                       </div>
+
+                      {p.url ? (
+                        <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 rounded-2xl border border-neutral-200 bg-white/70 px-4 py-2 text-sm font-medium text-neutral-900 hover:bg-white transition-colors whitespace-nowrap"
+                        >
+                          View
+                          <FiExternalLink className="w-4 h-4" aria-hidden="true" />
+                        </a>
+                      ) : null}
                     </div>
-                    <ul className="mt-3 space-y-2">
+
+                    <ul className="relative mt-4 space-y-2">
                       {p.bullets.map((b) => (
-                        <li key={b} className="flex gap-2 text-neutral-700">
-                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-800 shrink-0" />
-                          <span>{b}</span>
+                        <li key={b} className="flex gap-3 text-neutral-700">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-800" />
+                          <span className="leading-relaxed">{b}</span>
                         </li>
                       ))}
                     </ul>
@@ -301,237 +309,55 @@ function App() {
 
             <Section id="contact" title="Contact">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <div className="lg:col-span-4">
-                  <div className="rounded-2xl border border-neutral-200 bg-white/70 p-5">
+                <div className="lg:col-span-12">
+                  <div className="rounded-2xl border border-neutral-200 bg-white/80 backdrop-blur p-6 md:p-7 shadow-sm">
                     <div className="text-xs uppercase tracking-wide text-neutral-500">
                       Contact
                     </div>
 
-                    <div className="mt-4 space-y-3">
+                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <a
-                        className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/60 px-4 py-3 hover:bg-neutral-50 transition-colors"
                         href={`mailto:${contact.email}`}
+                        className="group rounded-2xl border border-neutral-200 bg-white/60 hover:bg-white transition-colors px-5 py-4"
+                        aria-label={`Email ${contact.email}`}
                       >
-                        <span className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-neutral-900 text-neutral-50">
-                          <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M4 6.5C4 5.67157 4.67157 5 5.5 5H18.5C19.3284 5 20 5.67157 20 6.5V17.5C20 18.3284 19.3284 19 18.5 19H5.5C4.67157 19 4 18.3284 4 17.5V6.5Z"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                            />
-                            <path
-                              d="M6.5 7.5L12 12L17.5 7.5"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinejoin="round"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </span>
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium text-neutral-900 group-hover:underline">
-                            {contact.email}
+                        <div className="flex items-center gap-3">
+                          <span className="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-neutral-900 text-neutral-50">
+                            <FiMail className="w-5 h-5" />
+                          </span>
+                          <div className="min-w-0">
+                            <div className="text-sm font-semibold text-neutral-900">
+                              Email
+                            </div>
+                            <div className="text-sm text-neutral-700 break-all">
+                              {contact.email}
+                            </div>
                           </div>
                         </div>
                       </a>
 
                       <a
-                        className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/60 px-4 py-3 hover:bg-neutral-50 transition-colors"
-                        href={`https://github.com/${contact.githubUsername}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <span className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-neutral-900 text-neutral-50">
-                          <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M9 19C9 19.9 8.3 21 7 21C4 21 4 18.5 4 18C4 17.4 3.6 16.5 3 16.2C3 16.2 4 16 4.6 16.8C5.1 17.5 5.7 18 7 18"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinecap="round"
-                            />
-                            <path
-                              d="M12 20C9.5 20 8 18.5 8 16C8 14.9 8.4 13.9 9.1 13.2C9 12.6 8.6 11.8 7.9 11.4C8.9 11 10.1 11.2 11 11.8C11.7 11.5 12.5 11.3 13.3 11.3C16.3 11.3 18.7 12.7 19.5 14.7C20.2 16.3 19.4 18.4 17.6 19.3C16.6 19.8 15.5 20 14.4 20"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M14 5C14 6.1 13.1 7 12 7C10.9 7 10 6.1 10 5C10 3.9 10.9 3 12 3C13.1 3 14 3.9 14 5Z"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                            />
-                          </svg>
-                        </span>
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium text-neutral-900 group-hover:underline">
-                            GitHub: {contact.githubUsername}
-                          </div>
-                        </div>
-                      </a>
-
-                      <a
-                        className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/60 px-4 py-3 hover:bg-neutral-50 transition-colors"
                         href={`https://www.linkedin.com/in/${contact.linkedinUsername}`}
                         target="_blank"
                         rel="noreferrer"
+                        className="group rounded-2xl border border-neutral-200 bg-white/60 hover:bg-white transition-colors px-5 py-4"
+                        aria-label={`LinkedIn ${contact.linkedinUsername}`}
                       >
-                        <span className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-neutral-900 text-neutral-50">
-                          <svg
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6 9V18"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinecap="round"
-                            />
-                            <path
-                              d="M6 6.5C6 7.05 5.55 7.5 5 7.5C4.45 7.5 4 7.05 4 6.5C4 5.95 4.45 5.5 5 5.5C5.55 5.5 6 5.95 6 6.5Z"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                            />
-                            <path
-                              d="M10 18V12.5C10 11.1193 11.1193 10 12.5 10C13.8807 10 15 11.1193 15 12.5V18"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M10 12.5C10 11.1193 11.1193 10 12.5 10"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinecap="round"
-                            />
-                            <path
-                              d="M18 18V12"
-                              stroke="currentColor"
-                              strokeWidth="1.6"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </span>
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium text-neutral-900 group-hover:underline">
-                            LinkedIn: {contact.linkedinUsername}
-                          </div>
-                        </div>
-                      </a>
-
-                      <a
-                        className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-neutral-50/60 px-4 py-3 hover:bg-neutral-50 transition-colors"
-                        href={`https://leetcode.com/${contact.leetcodeUsername}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <span className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-neutral-900 text-neutral-50">
-                          <SiLeetcode className="w-4 h-4" />
-                        </span>
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium text-neutral-900 group-hover:underline">
-                            LeetCode: {contact.leetcodeUsername}
+                        <div className="flex items-center gap-3">
+                          <span className="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-neutral-900 text-neutral-50">
+                            <FaLinkedinIn className="w-5 h-5" />
+                          </span>
+                          <div className="min-w-0">
+                            <div className="text-sm font-semibold text-neutral-900">
+                              LinkedIn
+                            </div>
+                            <div className="text-sm text-neutral-700 break-all">
+                              {contact.linkedinUsername}
+                            </div>
                           </div>
                         </div>
                       </a>
                     </div>
-
-                    <div className="mt-4 text-sm text-neutral-600 space-y-1">
-                      <div>{contact.location}</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-8">
-                  <div className="rounded-2xl border border-neutral-200 bg-white/70 p-5">
-                    <form onSubmit={submitMessage} className="space-y-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <label className="block">
-                          <div className="text-sm font-medium text-neutral-800">
-                            Name
-                          </div>
-                          <input
-                            className="mt-2 w-full rounded-xl border border-neutral-200 bg-white/60 px-4 py-3 outline-none focus:ring-2 focus:ring-neutral-300"
-                            type="text"
-                            value={form.name}
-                            onChange={(e) =>
-                              setForm((prev) => ({
-                                ...prev,
-                                name: e.target.value,
-                              }))
-                            }
-                            placeholder="Your name"
-                            required
-                          />
-                        </label>
-
-                        <label className="block">
-                          <div className="text-sm font-medium text-neutral-800">
-                            Email
-                          </div>
-                          <input
-                            className="mt-2 w-full rounded-xl border border-neutral-200 bg-white/60 px-4 py-3 outline-none focus:ring-2 focus:ring-neutral-300"
-                            type="email"
-                            value={form.email}
-                            onChange={(e) =>
-                              setForm((prev) => ({
-                                ...prev,
-                                email: e.target.value,
-                              }))
-                            }
-                            placeholder="you@example.com"
-                            required
-                          />
-                        </label>
-                      </div>
-
-                      <label className="block">
-                        <div className="text-sm font-medium text-neutral-800">
-                          Message
-                        </div>
-                        <textarea
-                          className="mt-2 w-full rounded-xl border border-neutral-200 bg-white/60 px-4 py-3 outline-none focus:ring-2 focus:ring-neutral-300"
-                          rows={6}
-                          value={form.message}
-                          onChange={(e) =>
-                            setForm((prev) => ({
-                              ...prev,
-                              message: e.target.value,
-                            }))
-                          }
-                          placeholder="Write your message..."
-                          required
-                        />
-                      </label>
-
-                      <button
-                        type="submit"
-                        className="w-full rounded-xl bg-neutral-900 text-neutral-50 px-5 py-3 font-medium hover:bg-neutral-800 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-300"
-                      >
-                        Send Message
-                      </button>
-
-                      {formStatus ? (
-                        <div className="text-xs text-neutral-600">
-                          {formStatus}
-                        </div>
-                      ) : null}
-                    </form>
                   </div>
                 </div>
               </div>

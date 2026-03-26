@@ -55,7 +55,7 @@ const Header = () => {
       <div className="flex flex-row items-center gap-6 justify-between">
         <div className="text-2xl font-semibold tracking-tight">
           <a href="/" className="flex items-center">
-            <span className="hidden sm:inline">Yeabsira Driba</span>
+            <span className="hidden sm:inline">Yeabsira Gurmu</span>
             <span className="sm:hidden">YD</span>
           </a>
         </div>
