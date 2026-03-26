@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Prompt", sans-serif;
+  color: rgb(39 39 42);
 }
 
 a:hover {

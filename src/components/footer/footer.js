@@ -1,8 +1,7 @@
 const Footer = () => {
   return (
-    <div className="absolute bottom-0 px-10 py-5">
-      <div></div>
-      <div>&copy; {new Date().getFullYear()} Yeabsira Driba</div>
+    <div className="px-6 md:px-12 py-8">
+      <div className="text-sm text-neutral-600">&copy; {new Date().getFullYear()} Yeabsira Driba</div>
     </div>
   );
 };
