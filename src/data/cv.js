@@ -1,7 +1,7 @@
 const cv = {
-  name: "Yeabsira Gurmu",
+  name: "Yeabsira Driba",
   contact: {
-    email: "se.yeabsira.driba@gmail.com",
+    email: "dryeab@gmail.com",
     location: "Addis Ababa, Ethiopia",
     githubUsername: "dryeab",
     linkedinUsername: "dryeab",
@@ -10,7 +10,7 @@ const cv = {
   education: [
     {
       title: "BSc in Software Engineering, Addis Ababa University",
-      period: "09/2018 – 07/2021",
+      period: "09/2018 – 07/2023",
       details: [
         "One of the leading Universities in Africa",
         "GPA: 3.71 / 4.0",
@@ -29,7 +29,7 @@ const cv = {
   experience: [
     {
       role: "Python Engineer, Turing",
-      period: "10/2024 – 01/2026",
+      period: "06/2024 – 01/2026",
       bullets: [
         "Enhanced a state-of-the-art AI model's performance in Python, identifying and resolving over 100 critical flaws to improve trajectory and reliability.",
         "Utilized advanced debugging and optimization techniques to refine outputs and align with project goals.",
@@ -38,7 +38,7 @@ const cv = {
     },
     {
       role: "Frontend Developer, Stead Tech Inc",
-      period: "03/2023 – 08/2023",
+      period: "01/2024 – 06/2024",
       bullets: [
         "Led the frontend development for Impact AI, a dynamic job search portal, using React and Tailwind CSS.",
         "Developed user-facing features for job exploration and seamless resume creation within the platform.",
@@ -47,7 +47,7 @@ const cv = {
     },
     {
       role: "Head of Education & Full Stack Developer, A2SV",
-      period: "01/2021 – 12/2021",
+      period: "01/2023 – 01/2024",
       bullets: [
         "Mentored over 50 students in software development, and data structures and algorithms.",
         "Developed the Atrons platform using Express.js and Vue.js, enabling students to share and search study materials.",
@@ -57,7 +57,7 @@ const cv = {
     },
     {
       role: "Backend Developer, Eskalate LLC",
-      period: "02/2022 – 09/2022",
+      period: "03/2023 – 09/2023",
       bullets: [
         "Designed and developed the backend for the Community Portal, automating the manual admission process of the company with ASP.NET Core and PostgreSQL.",
         "Implemented key functionalities such as scraping candidate assessment data from external platforms, scheduling interviews, managing applications, and designing the database schema.",
