@@ -320,21 +320,14 @@ function App() {
             </div>
 
             {/* Algorithmic Visualizer */}
-            <div className="mt-12">
-              <div className="mb-8 flex items-center gap-4">
-                <FiTerminal className="w-5 h-5 text-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.3)]" />
-                <h2 className="text-lg md:text-xl font-bold tracking-widest uppercase font-mono" style={{ color: "var(--text-heading)" }}>
-                  Algorithmic Visualizer
-                </h2>
-                <div className="h-[1px] flex-1" style={{ backgroundImage: "linear-gradient(to right, var(--border-default), transparent)" }} />
-              </div>
+            <div className="mt-16 pt-12" style={{ borderTop: "1px solid var(--border-muted)" }}>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                 <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
                   <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400">
                     LeetCode Guardian Sandbox
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold font-sans tracking-tight" style={{ color: "var(--text-heading)" }}>
-                    Dynamic Search Simulations
+                    Algorithmic Visualizer
                   </h3>
                   <p className="text-sm leading-relaxed font-sans" style={{ color: "var(--text-secondary)" }}>
                     As an educator and competitive coder, I appreciate visual learning tools. This Binary Search simulation visually illustrates the logarithmic dividing process of search spaces:
