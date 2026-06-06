@@ -10,19 +10,23 @@ const cv = {
   education: [
     {
       title: "BSc in Software Engineering, Addis Ababa University",
-      period: "09/2018 – 07/2023",
+      period: "09/2015 – 07/2020",
       details: [
-        "One of the leading Universities in Africa",
+        {
+          text: "One of the leading Universities in Africa",
+          url: "https://www.usnews.com/education/best-global-universities/addis-ababa-university-529036",
+        },
         "GPA: 3.71 / 4.0",
         "Coursework: Web and Mobile Application Development, Operating System, Object Oriented Programming, Database Systems, Data Structures and Algorithms, and Fundamentals of AI.",
       ],
     },
     {
       title: "Introduction to Competitive Programming, A2SV",
-      period: "12/2021 – 12/2022",
+      url: "https://www.a2sv.org/",
+      period: "12/2019 – 12/2020",
       details: [
         "A2SV upskills high-potential African students, and connects with top tech companies.",
-        "A2SV students achieved 70% (31/44) success rate at Google software engineering interviews for summer 2022.",
+        "A2SV students achieved 70% (31/44) success rate at Google software engineering interviews for summer 2019.",
       ],
     },
   ],
@@ -114,7 +118,7 @@ const cv = {
     ],
   },
   awardsAndActivities: [
-    "Awarded Best Research Project among 2021 projects at Addis Ababa University.",
+    "Awarded Best Research Project among 2018 projects at Addis Ababa University.",
     "Second Place in the 2023 Ethiopian Collegiate Programming Contest.",
     "Achieved Leetcode's Guardian rank (Top 1% globally) with a rating over 2290, and solved 800+ questions.",
     "Volunteered as a teaching assistant for the 2023 AddisCoder program , an intensive summer course on algorithms for high schoolers, led by experts like Prof. Jelani Nelson , Prof. Daniel Kang , Alex Krenstel and Heather Huynh .",

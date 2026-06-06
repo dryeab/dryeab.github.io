@@ -136,7 +136,21 @@ function App() {
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-500/5 to-transparent rounded-bl-full pointer-events-none" />
                   
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
-                    <h4 className="text-base font-bold font-sans max-w-xs" style={{ color: "var(--text-heading)" }}>{edu.title}</h4>
+                    <h4 className="text-base font-bold font-sans max-w-xs" style={{ color: "var(--text-heading)" }}>
+                      {edu.url ? (
+                        <a
+                          href={edu.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="transition-colors hover:text-cyan-500 dark:hover:text-cyan-400"
+                        >
+                          {edu.title}
+                          <FiExternalLink className="inline-block w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 ml-1.5 align-middle -translate-y-0.5" />
+                        </a>
+                      ) : (
+                        edu.title
+                      )}
+                    </h4>
                     <span className="text-xs font-mono text-cyan-400 font-semibold whitespace-nowrap px-2 py-0.5 rounded shrink-0 self-start"
                       style={{ background: theme === "light" ? "rgba(6,182,212,0.08)" : "rgba(6,182,212,0.12)", border: "1px solid rgba(6,182,212,0.25)" }}>
                       {edu.period}
@@ -144,12 +158,31 @@ function App() {
                   </div>
 
                   <ul className="space-y-3 font-sans text-sm" style={{ color: "var(--text-secondary)" }}>
-                    {edu.details.map((d, dIdx) => (
-                      <li key={dIdx} className="flex items-start gap-2.5 leading-relaxed">
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(6,182,212,0.6)]" />
-                        <span>{d}</span>
-                      </li>
-                    ))}
+                    {edu.details.map((d, dIdx) => {
+                      const isObj = typeof d === "object" && d !== null;
+                      const text = isObj ? d.text : d;
+                      const url = isObj ? d.url : null;
+                      return (
+                        <li key={dIdx} className="flex items-start gap-2.5 leading-relaxed">
+                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(6,182,212,0.6)]" />
+                          <span>
+                            {url ? (
+                              <a
+                                href={url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="transition-colors hover:text-cyan-500 dark:hover:text-cyan-400"
+                              >
+                                {text}
+                                <FiExternalLink className="inline-block w-3 h-3 text-cyan-500 dark:text-cyan-400 ml-1.5 align-middle -translate-y-0.5" />
+                              </a>
+                            ) : (
+                              text
+                            )}
+                          </span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}
@@ -522,12 +555,12 @@ function App() {
                       Best Research Project
                     </h3>
                     <p className="text-xs mt-2 leading-relaxed font-sans" style={{ color: "var(--text-secondary)" }}>
-                      Awarded <strong style={{ color: "var(--text-primary)" }}>Best Research Project</strong> among 2021 projects at Addis Ababa University for work in agricultural NLP model development.
+                      Awarded <strong style={{ color: "var(--text-primary)" }}>Best Research Project</strong> among 2018 projects at Addis Ababa University for work in agricultural NLP model development.
                     </p>
                   </div>
                   <div className="mt-6 pt-4 flex items-center justify-between font-mono text-[10px]" style={{ borderTop: "1px solid var(--border-muted)", color: "var(--text-muted)" }}>
                     <span>Addis Ababa University</span>
-                    <span className="text-cyan-400 font-semibold">AAU 2021</span>
+                    <span className="text-cyan-400 font-semibold">AAU 2018</span>
                   </div>
                 </div>
 
