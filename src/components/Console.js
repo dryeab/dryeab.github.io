@@ -70,6 +70,7 @@ const Console = () => {
   const [booting, setBooting] = useState(true);
   const [bootIndex, setBootIndex] = useState(0);
   const consoleEndRef = useRef(null);
+  const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
 
   // Handle boot sequence
@@ -85,9 +86,11 @@ const Console = () => {
     }
   }, [bootIndex]);
 
-  // Scroll to bottom of terminal when logs are added
+  // Scroll to bottom of terminal's own container (NOT the page)
   useEffect(() => {
-    consoleEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (cmdStr) => {
@@ -164,7 +167,7 @@ const Console = () => {
       </div>
 
       {/* Terminal Logs Area */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-2 select-text scrollbar-thin scrollbar-thumb-zinc-800">
+      <div ref={scrollAreaRef} className="flex-1 p-4 overflow-y-auto space-y-2 select-text scrollbar-thin scrollbar-thumb-zinc-800">
         {history.map((log, idx) => {
           if (log.type === "input") {
             return (

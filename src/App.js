@@ -245,41 +245,45 @@ function App() {
                   </div>
                 ))}
               </div>
-            </Section>
-
-            {/* ALGORITHMIC SANDBOX STANDALONE SECTION */}
-            <Section id="visualizer" title="Algorithmic Visualizer" icon={FiTerminal}>
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
-                  <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400">
-                    LeetCode Guardian Sandbox
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white font-sans tracking-tight">
-                    Dynamic Search Simulations
-                  </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed font-sans">
-                    As an educator and competitive coder, I appreciate visual learning tools. This Binary Search simulation visually illustrates the logarithmic dividing process of search spaces:
-                  </p>
-                  <ul className="space-y-2 text-xs text-zinc-400 font-sans">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
-                      <span><strong>Left Boundary Pointer (L):</strong> Starts at index 0.</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                      <span><strong>Right Boundary Pointer (R):</strong> Starts at index N-1.</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                      <span><strong>Mid Pivot Pointer (M):</strong> Evaluated boundary centers.</span>
-                    </li>
-                  </ul>
-                  <p className="text-xs text-zinc-500 font-mono italic">
-                    Try choosing a target element and clicking 'Step' or 'Run' to observe the pointer calculations live.
-                  </p>
+              {/* Algorithmic Visualizer — embedded as sub-section */}
+              <div className="mt-12">
+                <div className="mb-8 flex items-center gap-4">
+                  <FiTerminal className="w-5 h-5 text-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.3)]" />
+                  <h2 className="text-lg md:text-xl font-bold tracking-widest text-zinc-100 uppercase font-mono">Algorithmic Visualizer</h2>
+                  <div className="h-[1px] flex-1" style={{ backgroundImage: "linear-gradient(to right, #27272a, transparent)" }} />
                 </div>
-                <div className="lg:col-span-7 w-full">
-                  <AlgoVisualizer />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                  <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
+                    <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400">
+                      LeetCode Guardian Sandbox
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-sans tracking-tight">
+                      Dynamic Search Simulations
+                    </h3>
+                    <p className="text-sm text-zinc-400 leading-relaxed font-sans">
+                      As an educator and competitive coder, I appreciate visual learning tools. This Binary Search simulation visually illustrates the logarithmic dividing process of search spaces:
+                    </p>
+                    <ul className="space-y-2 text-xs text-zinc-400 font-sans">
+                      <li className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+                        <span><strong>Left Boundary Pointer (L):</strong> Starts at index 0.</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                        <span><strong>Right Boundary Pointer (R):</strong> Starts at index N-1.</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                        <span><strong>Mid Pivot Pointer (M):</strong> Evaluated boundary centers.</span>
+                      </li>
+                    </ul>
+                    <p className="text-xs text-zinc-500 font-mono italic">
+                      Try choosing a target element and clicking 'Step' or 'Run' to observe the pointer calculations live.
+                    </p>
+                  </div>
+                  <div className="lg:col-span-7 w-full">
+                    <AlgoVisualizer />
+                  </div>
                 </div>
               </div>
             </Section>
