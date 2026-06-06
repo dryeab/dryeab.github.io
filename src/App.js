@@ -465,11 +465,8 @@ function App() {
                 </a>
 
                 {/* AddisCoder Volunteering Card */}
-                <a
-                  href="https://drive.google.com/file/d/1-0WZPN4GzDiOn8Ucp209D0hIQGEYmyEs/view?usp=sharing"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="glass-card rounded-2xl p-6 flex flex-col justify-between hover:scale-[1.01] transition-all group"
+                <div
+                  className="glass-card rounded-2xl p-6 flex flex-col justify-between transition-all group hover:scale-[1.01]"
                   style={{ borderColor: "var(--border-default)" }}
                 >
                   <div>
@@ -485,8 +482,15 @@ function App() {
                       </span>
                     </div>
                     <h3 className="text-lg font-bold tracking-tight font-sans flex items-center gap-1.5" style={{ color: "var(--text-heading)" }}>
-                      AddisCoder Volunteering
-                      <FiExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                      <a
+                        href="https://www.addiscoder.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors flex items-center gap-1.5"
+                      >
+                        <span>AddisCoder Volunteering</span>
+                        <FiExternalLink className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
+                      </a>
                     </h3>
                     <p className="text-xs mt-2 leading-relaxed font-sans" style={{ color: "var(--text-secondary)" }}>
                       Volunteered as a teaching assistant for the 2023 AddisCoder program, an intensive algorithms course for high schoolers, led by global industry and academic experts.
@@ -494,11 +498,16 @@ function App() {
                   </div>
                   <div className="mt-6 pt-4 flex items-center justify-between font-mono text-[10px]" style={{ borderTop: "1px solid var(--border-muted)", color: "var(--text-muted)" }}>
                     <span>AddisCoder 2023</span>
-                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                    <a
+                      href="https://drive.google.com/file/d/1-0WZPN4GzDiOn8Ucp209D0hIQGEYmyEs/view?usp=sharing"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition-colors"
+                    >
                       Certificate <FiExternalLink className="w-3 h-3" />
-                    </span>
+                    </a>
                   </div>
-                </a>
+                </div>
 
                 {/* ECPC 2nd Place Card */}
                 <a
@@ -557,12 +566,12 @@ function App() {
                       Best Research Project
                     </h3>
                     <p className="text-xs mt-2 leading-relaxed font-sans" style={{ color: "var(--text-secondary)" }}>
-                      Awarded <strong style={{ color: "var(--text-primary)" }}>Best Research Project</strong> among 2018 projects at Addis Ababa University for work in agricultural NLP model development.
+                      Awarded <strong style={{ color: "var(--text-primary)" }}>Best Research Project</strong> among 2020 projects at Addis Ababa University for work in agricultural NLP model development.
                     </p>
                   </div>
                   <div className="mt-6 pt-4 flex items-center justify-between font-mono text-[10px]" style={{ borderTop: "1px solid var(--border-muted)", color: "var(--text-muted)" }}>
                     <span>Addis Ababa University</span>
-                    <span className="text-cyan-400 font-semibold">AAU 2018</span>
+                    <span className="text-cyan-400 font-semibold">AAU 2020</span>
                   </div>
                 </div>
 

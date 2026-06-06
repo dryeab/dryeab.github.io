@@ -122,7 +122,7 @@ const cv = {
     ],
   },
   awardsAndActivities: [
-    "Awarded Best Research Project among 2018 projects at Addis Ababa University.",
+    "Awarded Best Research Project among 2020 projects at Addis Ababa University.",
     "Second Place in the 2023 Ethiopian Collegiate Programming Contest.",
     "Achieved Leetcode's Guardian rank (Top 1% globally) with a rating over 2290, and solved 800+ questions.",
     "Volunteered as a teaching assistant for the 2023 AddisCoder program , an intensive summer course on algorithms for high schoolers, led by experts like Prof. Jelani Nelson , Prof. Daniel Kang , Alex Krenstel and Heather Huynh .",
