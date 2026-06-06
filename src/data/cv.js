@@ -32,8 +32,9 @@ const cv = {
   ],
   experience: [
     {
-      role: "Python Engineer, Turing",
-      period: "06/2024 – 01/2026",
+      role: "Senior Python Engineer, Turing",
+      period: "06/2024 – 04/2026",
+      url: "https://www.turing.com/",
       bullets: [
         "Enhanced a state-of-the-art AI model's performance in Python, identifying and resolving over 100 critical flaws to improve trajectory and reliability.",
         "Utilized advanced debugging and optimization techniques to refine outputs and align with project goals.",
@@ -42,7 +43,8 @@ const cv = {
     },
     {
       role: "Frontend Developer, Stead Tech Inc",
-      period: "01/2024 – 06/2024",
+      period: "01/2023 – 05/2024",
+      url: "https://impactcareers.com/",
       bullets: [
         "Led the frontend development for Impact AI, a dynamic job search portal, using React and Tailwind CSS.",
         "Developed user-facing features for job exploration and seamless resume creation within the platform.",
@@ -51,7 +53,8 @@ const cv = {
     },
     {
       role: "Head of Education & Full Stack Developer, A2SV",
-      period: "01/2023 – 01/2024",
+      period: "08/2021 – 12/2022",
+      url: "https://a2sv.org/",
       bullets: [
         "Mentored over 50 students in software development, and data structures and algorithms.",
         "Developed the Atrons platform using Express.js and Vue.js, enabling students to share and search study materials.",
@@ -61,7 +64,8 @@ const cv = {
     },
     {
       role: "Backend Developer, Eskalate LLC",
-      period: "03/2023 – 09/2023",
+      period: "08/2020 – 07/2021",
+      url: "https://www.eskalate.io/",
       bullets: [
         "Designed and developed the backend for the Community Portal, automating the manual admission process of the company with ASP.NET Core and PostgreSQL.",
         "Implemented key functionalities such as scraping candidate assessment data from external platforms, scheduling interviews, managing applications, and designing the database schema.",

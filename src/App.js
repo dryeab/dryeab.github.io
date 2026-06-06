@@ -209,12 +209,21 @@ function App() {
                     style={{ borderColor: "var(--border-default)" }}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                      <div>
-                        <h4 className="text-base sm:text-lg font-bold tracking-tight font-sans" style={{ color: "var(--text-heading)" }}>
-                          {job.role}
-                        </h4>
-                        <span className="text-xs font-mono font-medium" style={{ color: "var(--text-muted)" }}>Professional Experience</span>
-                      </div>
+                      <h4 className="text-base sm:text-lg font-bold tracking-tight font-sans" style={{ color: "var(--text-heading)" }}>
+                        {job.url ? (
+                          <a
+                            href={job.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="transition-colors hover:text-cyan-500 dark:hover:text-cyan-400"
+                          >
+                            {job.role}
+                            <FiExternalLink className="inline-block w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 ml-1.5 align-middle -translate-y-0.5" />
+                          </a>
+                        ) : (
+                          job.role
+                        )}
+                      </h4>
                       <span className="text-xs font-mono text-emerald-400 font-semibold whitespace-nowrap px-2 py-0.5 rounded self-start sm:self-center"
                         style={{ background: theme === "light" ? "rgba(16,185,129,0.08)" : "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.2)" }}>
                         {job.period}

@@ -28,10 +28,10 @@ const COMMAND_RESPONSES = {
   ],
   experience: [
     { type: "sys", text: "EXPERIENCE LOG" },
-    { type: "ok", text: "[06/2024 - 01/2026] Python Engineer, Turing (AI Alignment & Reliability)" },
-    { type: "ok", text: "[01/2024 - 06/2024] Frontend Developer, Stead Tech Inc (React/Tailwind)" },
-    { type: "ok", text: "[01/2023 - 01/2024] Head of Education & Full Stack Developer, A2SV" },
-    { type: "ok", text: "[03/2023 - 09/2023] Backend Developer, Eskalate LLC (ASP.NET/PostgreSQL)" },
+    { type: "ok", text: "[06/2024 - 04/2026] Python Engineer, Turing (AI Alignment & Reliability)" },
+    { type: "ok", text: "[01/2023 - 05/2024] Frontend Developer, Stead Tech Inc (React/Tailwind)" },
+    { type: "ok", text: "[08/2021 - 12/2022] Head of Education & Full Stack Developer, A2SV" },
+    { type: "ok", text: "[08/2020 - 07/2021] Backend Developer, Eskalate LLC (ASP.NET/PostgreSQL)" },
     { type: "info", text: "Scrolling to Experience section..." },
   ],
   projects: [
