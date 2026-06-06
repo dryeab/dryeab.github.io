@@ -10,11 +10,11 @@ const links = [
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const firstMobileLinkRef = useRef(null);
 
   useEffect(() => {
     const onResize = () => {
-      // Avoid keeping the mobile menu open when switching to desktop layout.
       if (window.innerWidth >= 768) setOpen(false);
     };
 
@@ -50,101 +50,154 @@ const Header = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  // Scroll spy effect to highlight active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200; // Offset for header height
+      
+      // Check each section position
+      for (const link of links) {
+        const id = link.href.substring(1);
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(link.href);
+            return;
+          }
+        }
+      }
+      // If we are at the top, clear active section
+      if (window.scrollY < 100) {
+        setActiveSection("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Initial call to set active section on page load
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="border-b-[1px] py-5 px-6 md:px-12 mb-5">
-      <div className="flex flex-row items-center gap-6 justify-between">
-        <div className="text-2xl font-semibold tracking-tight">
-          <a href="/" className="flex items-center">
-            <span className="hidden sm:inline">Yeabsira Driba</span>
-            <span className="sm:hidden">YD</span>
+    <header className="sticky top-0 z-40 w-full border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md select-none">
+      <div className="mx-auto max-w-6xl px-6 md:px-12 py-4 flex flex-row items-center justify-between">
+        <div className="text-xl font-bold tracking-tight font-mono">
+          <a href="/" className="flex items-center gap-1 group">
+            <span className="text-cyan-400 group-hover:text-emerald-400 transition-colors">&lt;</span>
+            <span className="text-zinc-100 font-semibold hidden sm:inline">Yeabsira Driba</span>
+            <span className="text-zinc-105 font-semibold sm:hidden">YD</span>
+            <span className="text-cyan-405 group-hover:text-emerald-400 transition-colors">/&gt;</span>
           </a>
         </div>
 
+        {/* Desktop Navbar */}
+        <nav className="hidden md:flex flex-row flex-wrap items-center gap-x-8">
+          {links.map((l) => {
+            const isActive = activeSection === l.href;
+            return (
+              <a
+                key={l.href}
+                className={`font-sans text-sm font-medium transition-all relative py-1 ${
+                  isActive 
+                    ? "text-cyan-400" 
+                    : "text-zinc-400 hover:text-zinc-200"
+                }`}
+                href={l.href}
+              >
+                {l.label}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 rounded shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+                )}
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Mobile Navigation Menu Button */}
         <button
           type="button"
-          className="md:hidden rounded-xl border border-neutral-200 w-11 h-11 flex items-center justify-center text-neutral-800 hover:bg-neutral-50 transition-colors"
+          className="md:hidden rounded-xl border border-zinc-800 bg-zinc-950 w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 transition-all"
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
           <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-          <div className="relative w-5 h-5">
+          <div className="relative w-4 h-4">
             <span
               className={[
-                "absolute left-0 w-5 h-[2px] bg-neutral-800 rounded",
-                "transition-all duration-300 ease-in-out",
-                open ? "top-2.5 rotate-45" : "top-1",
+                "absolute left-0 w-4 h-[2px] bg-zinc-300 rounded",
+                "transition-all duration-350 ease-in-out",
+                open ? "top-2 rotate-45" : "top-0.5",
               ].join(" ")}
             />
             <span
               className={[
-                "absolute left-0 w-5 h-[2px] bg-neutral-800 rounded",
-                "transition-all duration-300 ease-in-out",
-                open ? "top-2.5 opacity-0 scale-0" : "top-2.5 opacity-100 scale-100",
+                "absolute left-0 w-4 h-[2px] bg-zinc-300 rounded",
+                "transition-all duration-350 ease-in-out",
+                open ? "top-2 opacity-0 scale-0" : "top-2 opacity-100 scale-100",
               ].join(" ")}
             />
             <span
               className={[
-                "absolute left-0 w-5 h-[2px] bg-neutral-800 rounded",
-                "transition-all duration-300 ease-in-out",
-                open ? "top-2.5 -rotate-45" : "top-[14px]",
+                "absolute left-0 w-4 h-[2px] bg-zinc-300 rounded",
+                "transition-all duration-350 ease-in-out",
+                open ? "top-2 -rotate-45" : "top-[13px]",
               ].join(" ")}
             />
           </div>
         </button>
-
-        <nav className="hidden md:flex flex-row flex-wrap justify-end gap-x-6 gap-y-2">
-          {links.map((l) => (
-            <a key={l.href} className="hover:opacity-80" href={l.href}>
-              {l.label}
-            </a>
-          ))}
-        </nav>
       </div>
 
+      {/* Mobile Drawer Menu */}
       <div
         className={[
-          "md:hidden fixed inset-0 z-50",
-          open ? "pointer-events-auto" : "pointer-events-none",
+          "md:hidden fixed inset-0 z-50 transition-all duration-300",
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
         ].join(" ")}
         aria-hidden={!open}
       >
         <button
           type="button"
-          className={[
-            "absolute inset-0 w-full h-full bg-neutral-900/20 transition-opacity duration-300 ease-in-out",
-            open ? "opacity-100" : "opacity-0",
-          ].join(" ")}
+          className="absolute inset-0 w-full h-full bg-black/60 backdrop-blur-sm transition-opacity duration-300"
           aria-label="Close navigation overlay"
           onClick={() => setOpen(false)}
         />
 
         <div
           className={[
-            "absolute left-0 right-0 top-16 mx-6 rounded-2xl border border-neutral-200",
-            "bg-white/85 backdrop-blur shadow-lg",
-            "transition-all duration-300 ease-in-out",
-            open ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-95",
+            "absolute left-0 right-0 top-16 mx-6 rounded-2xl border border-zinc-800",
+            "bg-zinc-950/95 backdrop-blur-xl shadow-2xl",
+            "transition-all duration-350 ease-in-out",
+            open ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95",
           ].join(" ")}
           role="dialog"
           aria-modal="true"
         >
-          <nav className="p-4 flex flex-col gap-2">
-            {links.map((l, idx) => (
-              <a
-                key={l.href}
-                ref={idx === 0 ? firstMobileLinkRef : null}
-                className="rounded-xl px-3 py-3 hover:bg-neutral-50 transition-colors text-neutral-900"
-                href={l.href}
-                onClick={() => setOpen(false)}
-              >
-                <span className="font-medium">{l.label}</span>
-              </a>
-            ))}
+          <nav className="p-4 flex flex-col gap-1 font-sans">
+            {links.map((l, idx) => {
+              const isActive = activeSection === l.href;
+              return (
+                <a
+                  key={l.href}
+                  ref={idx === 0 ? firstMobileLinkRef : null}
+                  className={`rounded-xl px-4 py-3 hover:bg-zinc-900/60 transition-all font-medium flex items-center justify-between ${
+                    isActive ? "text-cyan-400 bg-zinc-900/30" : "text-zinc-300"
+                  }`}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                >
+                  <span>{l.label}</span>
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />}
+                </a>
+              );
+            })}
           </nav>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
