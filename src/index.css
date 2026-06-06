@@ -6,7 +6,9 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
   background-color: #030303;
+  overflow-x: hidden;
 }
 
 body {

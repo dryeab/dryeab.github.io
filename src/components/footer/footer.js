@@ -7,9 +7,6 @@ const Footer = () => {
         <div className="text-xs font-mono text-zinc-500">
           &copy; {new Date().getFullYear()} Yeabsira Driba. All rights reserved.
         </div>
-        <div className="text-[10px] font-mono text-zinc-600">
-          Built with React, TailwindCSS &amp; Obsidian UI
-        </div>
       </div>
     </footer>
   );

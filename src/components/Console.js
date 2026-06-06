@@ -109,7 +109,8 @@ const Console = () => {
       
       // Auto-scroll logic for UI sections
       let sectionId = "";
-      if (cleanCmd === "experience") sectionId = "experience";
+      if (cleanCmd === "about") sectionId = "about";
+      else if (cleanCmd === "experience") sectionId = "experience";
       else if (cleanCmd === "projects") sectionId = "projects";
       else if (cleanCmd === "skills" || cleanCmd === "leetcode") sectionId = "skills";
       else if (cleanCmd === "contact") sectionId = "contact";

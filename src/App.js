@@ -29,23 +29,21 @@ function App() {
     experience,
     projects,
     skills,
-    awardsAndActivities,
   } = cv;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#030303] text-zinc-300 relative overflow-hidden obsidian-grid radial-glow-cyan">
-      {/* Glow ambient lights */}
-      <div className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-cyan-950/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-5%] w-[45vw] h-[45vw] rounded-full bg-emerald-950/10 blur-[120px] pointer-events-none" />
+    <div className="min-h-screen flex flex-col justify-between bg-[#030303] text-zinc-300 relative obsidian-grid radial-glow-cyan">
+      {/* Glow ambient lights — fixed so they never contribute to document overflow */}
+      <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-cyan-950/10 blur-[120px] pointer-events-none z-0" />
+      <div className="fixed bottom-[-10%] left-[-5%] w-[45vw] h-[45vw] rounded-full bg-emerald-950/10 blur-[120px] pointer-events-none z-0" />
 
-      <div className="relative flex flex-col min-h-screen z-10 radial-glow-bottom">
-        <Header />
-
-        <main className="flex-1">
-          <div className="mx-auto max-w-6xl px-6 md:px-12 py-6">
+      {/* Header rendered outside the scrollable/flex container to bypass browser fixed-position bugs */}
+      <Header />
+        <main className="flex-1 relative z-10 radial-glow-bottom pt-16 md:pt-20">
+          <div className="mx-auto max-w-6xl px-6 md:px-12 pt-4 pb-10 md:pt-6 md:pb-16">
             
             {/* HERO SECTION */}
-            <section className="py-6 md:py-12">
+            <section id="about" className="scroll-mt-28 pt-2 pb-6 md:pt-4 md:pb-12">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 
                 {/* Intro Card */}
@@ -118,93 +116,6 @@ function App() {
               </div>
             </section>
 
-            {/* BENTO HIGHLIGHTS GRID */}
-            <section className="py-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* LeetCode Guardian Card */}
-                <div className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-800 transition-all group">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-amber-400">
-                        <SiLeetcode className="w-5 h-5" />
-                      </div>
-                      <span className="text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold">
-                        Guardian Rank
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-white tracking-tight font-sans">LeetCode Guardian</h3>
-                    <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
-                      Ranked in the <strong>Top 1% globally</strong> with a competitive coding rating of <strong>2290+</strong> and 800+ algorithms solved.
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase">Rating</span>
-                      <span className="text-sm font-bold text-white font-mono">2290+</span>
-                    </div>
-                    {/* Tiny SVG chart line visual */}
-                    <svg className="w-20 h-8 text-emerald-500" viewBox="0 0 100 40">
-                      <path
-                        d="M0 35 Q 20 28, 40 30 T 80 12 T 100 5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                      />
-                      <circle cx="100" cy="5" r="3" fill="#10b981" className="animate-ping" />
-                      <circle cx="100" cy="5" r="2" fill="#10b981" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Best Research Project Card */}
-                <div className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-800 transition-all group">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-cyan-400">
-                        <FiAward className="w-5 h-5" />
-                      </div>
-                      <span className="text-[10px] font-mono bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-semibold">
-                        Best Research
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-white tracking-tight font-sans">Research Award</h3>
-                    <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
-                      Honored with the <strong>Best Research Project</strong> award among 2021 projects at Addis Ababa University for agricultural NLP research.
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between font-mono text-[10px] text-zinc-500">
-                    <span>Addis Ababa University</span>
-                    <span className="text-cyan-400">AAU 2021</span>
-                  </div>
-                </div>
-
-                {/* Algorithms Mentor Card */}
-                <div className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-800 transition-all group">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-emerald-400">
-                        <FiBookOpen className="w-5 h-5" />
-                      </div>
-                      <span className="text-[10px] font-mono bg-teal-500/10 border border-teal-500/20 text-teal-400 px-2 py-0.5 rounded-full font-semibold">
-                        Mentorship
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-white tracking-tight font-sans">Algorithms Mentor</h3>
-                    <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
-                      Mentored 50+ engineers in Data Structures and Algorithms. Volunteered as TA for the prestigious <strong>AddisCoder 2023</strong> program.
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between font-mono text-[10px] text-zinc-500">
-                    <span>A2SV &amp; AddisCoder</span>
-                    <span className="text-emerald-400">50+ Mentored</span>
-                  </div>
-                </div>
-
-              </div>
-            </section>
-
             {/* EDUCATION SECTION */}
             <Section id="education" title="Education" icon={FiBookOpen}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -260,7 +171,7 @@ function App() {
                       <ul className="space-y-2.5 text-sm font-sans text-zinc-400">
                         {job.bullets.map((b, bIdx) => (
                           <li key={bIdx} className="flex items-start gap-3 leading-relaxed">
-                            <span className="mt-1.5 font-mono text-[11px] text-cyan-400 shrink-0 select-none">$</span>
+                            <span className="mt-1 text-cyan-400 shrink-0 select-none" style={{ fontSize: '12px', lineHeight: '1.6' }}>›</span>
                             <span>{b}</span>
                           </li>
                         ))}
@@ -268,43 +179,6 @@ function App() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </Section>
-
-            {/* ALGORITHMIC SANDBOX STANDALONE SECTION */}
-            <Section id="visualizer" title="Algorithmic Visualizer" icon={FiTerminal}>
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
-                  <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400">
-                    LeetCode Guardian Sandbox
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white font-sans tracking-tight">
-                    Dynamic Search Simulations
-                  </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed font-sans">
-                    As an educator and competitive coder, I appreciate visual learning tools. This Binary Search simulation visually illustrates the logarithmic dividing process of search spaces:
-                  </p>
-                  <ul className="space-y-2 text-xs text-zinc-400 font-sans">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
-                      <span><strong>Left Boundary Pointer (L):</strong> Starts at index 0.</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                      <span><strong>Right Boundary Pointer (R):</strong> Starts at index N-1.</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                      <span><strong>Mid Pivot Pointer (M):</strong> Evaluated boundary centers.</span>
-                    </li>
-                  </ul>
-                  <p className="text-xs text-zinc-500 font-mono italic">
-                    Try choosing a target element and clicking 'Step' or 'Run' to observe the pointer calculations live.
-                  </p>
-                </div>
-                <div className="lg:col-span-7 w-full">
-                  <AlgoVisualizer />
-                </div>
               </div>
             </Section>
 
@@ -373,6 +247,43 @@ function App() {
               </div>
             </Section>
 
+            {/* ALGORITHMIC SANDBOX STANDALONE SECTION */}
+            <Section id="visualizer" title="Algorithmic Visualizer" icon={FiTerminal}>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
+                  <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400">
+                    LeetCode Guardian Sandbox
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white font-sans tracking-tight">
+                    Dynamic Search Simulations
+                  </h3>
+                  <p className="text-sm text-zinc-400 leading-relaxed font-sans">
+                    As an educator and competitive coder, I appreciate visual learning tools. This Binary Search simulation visually illustrates the logarithmic dividing process of search spaces:
+                  </p>
+                  <ul className="space-y-2 text-xs text-zinc-400 font-sans">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+                      <span><strong>Left Boundary Pointer (L):</strong> Starts at index 0.</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                      <span><strong>Right Boundary Pointer (R):</strong> Starts at index N-1.</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      <span><strong>Mid Pivot Pointer (M):</strong> Evaluated boundary centers.</span>
+                    </li>
+                  </ul>
+                  <p className="text-xs text-zinc-500 font-mono italic">
+                    Try choosing a target element and clicking 'Step' or 'Run' to observe the pointer calculations live.
+                  </p>
+                </div>
+                <div className="lg:col-span-7 w-full">
+                  <AlgoVisualizer />
+                </div>
+              </div>
+            </Section>
+
             {/* SKILLS SECTION */}
             <Section id="skills" title="Skills" icon={FiTerminal}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -417,19 +328,150 @@ function App() {
 
               </div>
 
-              {/* Awards and Activities Grid block */}
-              <div className="mt-6 glass-card rounded-2xl p-6 border border-zinc-850">
-                <h4 className="text-sm font-bold text-white tracking-wider uppercase font-mono mb-4 text-cyan-400">
-                  Awards and Key Activities
-                </h4>
-                <ul className="space-y-3.5 font-sans text-sm text-zinc-400">
-                  {awardsAndActivities.map((a, idx) => (
-                    <li key={idx} className="flex items-start gap-3 leading-relaxed">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
-                      <span>{a}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Awards and Activities Bento Cards Grid */}
+              <div className="mt-12">
+                <div className="mb-8 flex items-center gap-4">
+                  <FiAward className="w-5 h-5 text-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.3)]" />
+                  <h2 className="text-lg md:text-xl font-bold tracking-widest text-zinc-100 uppercase font-mono">Awards &amp; Key Activities</h2>
+                  <div className="h-[1px] flex-1" style={{ backgroundImage: "linear-gradient(to right, #27272a, transparent)" }} />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                  {/* LeetCode Guardian Card */}
+                  <a
+                    href="https://leetcode.com/u/dryeab/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-700 hover:scale-[1.01] transition-all group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-amber-400">
+                          <SiLeetcode className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-semibold">
+                          0.5% Globally
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-white tracking-tight font-sans flex items-center gap-1.5">
+                        LeetCode Guardian
+                        <FiExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                      </h3>
+                      <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+                        Ranked in the <strong className="text-zinc-200">Top 0.5% globally</strong> with a competitive coding rating of <strong className="text-zinc-200">2290+</strong> and 800+ algorithms solved.
+                      </p>
+                    </div>
+                    <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-mono text-zinc-500 uppercase">Rating</span>
+                        <span className="text-sm font-bold text-white font-mono">2290+</span>
+                      </div>
+                      {/* Tiny SVG chart line visual */}
+                      <svg className="w-20 h-8 text-emerald-500" viewBox="0 0 100 40">
+                        <path
+                          d="M0 35 Q 20 28, 40 30 T 80 12 T 100 5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                        <circle cx="100" cy="5" r="3" fill="#10b981" className="animate-ping" />
+                        <circle cx="100" cy="5" r="2" fill="#10b981" />
+                      </svg>
+                    </div>
+                  </a>
+
+                  {/* AddisCoder Volunteering Card */}
+                  <a
+                    href="https://drive.google.com/file/d/1-0WZPN4GzDiOn8Ucp209D0hIQGEYmyEs/view?usp=sharing"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-700 hover:scale-[1.01] transition-all group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-emerald-400">
+                          <FiBookOpen className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-mono bg-teal-500/10 border border-teal-500/20 text-teal-400 px-2 py-0.5 rounded-full font-semibold">
+                          Teaching &amp; Algorithms
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-white tracking-tight font-sans flex items-center gap-1.5">
+                        AddisCoder Volunteering
+                        <FiExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                      </h3>
+                      <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+                        Volunteered as a teaching assistant for the 2023 AddisCoder program, an intensive algorithms course for high schoolers, led by global industry and academic experts.
+                      </p>
+                    </div>
+                    <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                      <span>AddisCoder 2023</span>
+                      <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                        Certificate <FiExternalLink className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </a>
+
+                  {/* ECPC 2nd Place Card */}
+                  <a
+                    href="https://drive.google.com/file/d/1JxYQuRKIMc82NI7V_Vs6LjMhg59_eL0f/view?usp=sharing"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-700 hover:scale-[1.01] transition-all group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-cyan-400">
+                          <FiAward className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-mono bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-semibold">
+                          Collegiate Coding
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-white tracking-tight font-sans flex items-center gap-1.5">
+                        Collegiate Programming
+                        <FiExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                      </h3>
+                      <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+                        Achieved <strong className="text-zinc-200">Second Place</strong> in the 2023 Ethiopian Collegiate Programming Contest (ECPC), showcasing team troubleshooting and algorithm design.
+                      </p>
+                    </div>
+                    <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                      <span>ECPC 2023</span>
+                      <span className="text-cyan-400 font-semibold flex items-center gap-1">
+                        Certificate <FiExternalLink className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </a>
+
+                  {/* AAU Research Award Card */}
+                  <div
+                    className="glass-card rounded-2xl p-6 flex flex-col justify-between border border-zinc-850 hover:border-zinc-755 transition-all group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-cyan-400">
+                          <FiAward className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-mono bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-semibold">
+                          Academic Honor
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-white tracking-tight font-sans">
+                        Best Research Project
+                      </h3>
+                      <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+                        Awarded <strong className="text-zinc-200">Best Research Project</strong> among 2021 projects at Addis Ababa University for work in agricultural NLP model development.
+                      </p>
+                    </div>
+                    <div className="mt-6 border-t border-zinc-900 pt-4 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                      <span>Addis Ababa University</span>
+                      <span className="text-cyan-400 font-semibold">AAU 2021</span>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </Section>
 
@@ -482,7 +524,6 @@ function App() {
         </main>
 
         <Footer />
-      </div>
     </div>
   );
 }

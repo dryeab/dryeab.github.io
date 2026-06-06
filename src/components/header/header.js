@@ -12,6 +12,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const firstMobileLinkRef = useRef(null);
+  const isScrolling = useRef(false);
 
   useEffect(() => {
     const onResize = () => {
@@ -50,39 +51,52 @@ const Header = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  // Scroll spy effect to highlight active section
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setActiveSection(href);
+    isScrolling.current = true;
+    
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    
+    // Reset scroll locking after animation
+    setTimeout(() => {
+      isScrolling.current = false;
+    }, 1000);
+  };
+
+  // Scroll spy using IntersectionObserver
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200; // Offset for header height
-      
-      // Check each section position
-      for (const link of links) {
-        const id = link.href.substring(1);
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(link.href);
-            return;
-          }
+    const sectionIds = links.map((l) => l.href.substring(1));
+    const intersecting = {};
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrolling.current) return;
+
+        entries.forEach((entry) => {
+          intersecting[entry.target.id] = entry.isIntersecting;
+        });
+
+        const activeId = sectionIds.find((id) => intersecting[id]);
+        if (activeId) {
+          setActiveSection(`#${activeId}`);
+        } else if (window.scrollY < 100) {
+          setActiveSection("");
         }
-      }
-      // If we are at the top, clear active section
-      if (window.scrollY < 100) {
-        setActiveSection("");
-      }
-    };
+      },
+      { rootMargin: "-80px 0px -60% 0px", threshold: 0 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    // Initial call to set active section on page load
-    handleScroll();
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md select-none">
+    <header className="fixed top-0 left-0 right-0 z-40 w-full border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md select-none">
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-4 flex flex-row items-center justify-between">
         <div className="text-xl font-bold tracking-tight font-mono">
           <a href="/" className="flex items-center gap-1 group">
@@ -106,6 +120,7 @@ const Header = () => {
                     : "text-zinc-400 hover:text-zinc-200"
                 }`}
                 href={l.href}
+                onClick={(e) => handleNavClick(e, l.href)}
               >
                 {l.label}
                 {isActive && (
@@ -187,7 +202,10 @@ const Header = () => {
                     isActive ? "text-cyan-400 bg-zinc-900/30" : "text-zinc-300"
                   }`}
                   href={l.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    handleNavClick(e, l.href);
+                    setOpen(false);
+                  }}
                 >
                   <span>{l.label}</span>
                   {isActive && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />}
