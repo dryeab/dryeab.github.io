@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useTheme } from "./theme/ThemeContext";
 
 const ARRAY = [3, 8, 12, 17, 24, 35, 42, 58, 70, 85, 93];
 
@@ -11,6 +12,8 @@ const AlgoVisualizer = () => {
   const [logs, setLogs] = useState(["Ready. Select a target and click Step or Run."]);
   const [isPlaying, setIsPlaying] = useState(false);
   const playInterval = useRef(null);
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
   const resetSearch = useCallback((newTarget = target) => {
     setIsPlaying(false);
@@ -93,21 +96,37 @@ const AlgoVisualizer = () => {
   }, [isPlaying, stepSearch]);
 
   return (
-    <div className="glass-card rounded-2xl p-5 md:p-6 shadow-2xl border border-zinc-800 neon-glow-emerald flex flex-col justify-between h-full min-h-[380px]">
+    <div
+      className="rounded-2xl p-5 md:p-6 shadow-2xl neon-glow-emerald flex flex-col justify-between h-full min-h-[380px]"
+      style={{
+        background: isLight ? "rgba(255,255,255,0.85)" : "rgba(18,18,24,0.80)",
+        border: "1px solid var(--border-default)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        transition: "var(--transition-theme)",
+      }}
+    >
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <h3 className="text-sm font-semibold tracking-wider text-zinc-100 uppercase font-mono">
+            <h3 className="text-sm font-semibold tracking-wider uppercase font-mono" style={{ color: "var(--text-heading)" }}>
               Algo Sandbox: Binary Search
             </h3>
           </div>
-          <span className="text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-400 px-2 py-0.5 rounded font-mono">
+          <span
+            className="text-[10px] px-2 py-0.5 rounded font-mono"
+            style={{
+              background: "var(--bg-tag)",
+              border: "1px solid var(--border-default)",
+              color: "var(--text-secondary)",
+            }}
+          >
             O(log N)
           </span>
         </div>
 
-        <p className="text-xs text-zinc-400 leading-relaxed mb-6 font-sans">
+        <p className="text-xs leading-relaxed mb-6 font-sans" style={{ color: "var(--text-secondary)" }}>
           Step through an algorithm live. Watch pointers shrink the boundaries in logarithmic time to locate the target.
         </p>
 
@@ -119,24 +138,63 @@ const AlgoVisualizer = () => {
             const isLeft = idx === left;
             const isRight = idx === right;
 
-            let cardStyle = "border-zinc-800 text-zinc-500 bg-zinc-950/20 opacity-30";
-            if (!isOutside) {
-              cardStyle = "border-zinc-700 bg-zinc-900 text-zinc-200";
-              if (isMid) {
-                cardStyle = "border-amber-500 bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/30 scale-105 shadow-[0_0_10px_rgba(245,158,11,0.2)]";
-              } else if (isLeft && isRight) {
-                cardStyle = "border-cyan-500 bg-cyan-500/10 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]";
-              } else if (isLeft) {
-                cardStyle = "border-teal-500 bg-teal-500/10 text-teal-400 shadow-[0_0_10px_rgba(20,184,166,0.15)]";
-              } else if (isRight) {
-                cardStyle = "border-sky-500 bg-sky-500/10 text-sky-400 shadow-[0_0_10px_rgba(14,165,233,0.15)]";
-              }
-            }
-            if (status === "found" && isMid) {
-              cardStyle = "border-emerald-500 bg-emerald-500/20 text-emerald-400 ring-2 ring-emerald-500/50 scale-110 shadow-[0_0_15px_rgba(16,185,129,0.4)]";
+            let cardStyle = {};
+            let className = "w-full rounded-md border flex items-center justify-center font-mono text-[10px] sm:text-xs font-semibold transition-all duration-300";
+
+            if (isOutside) {
+              cardStyle = {
+                border: `1px solid var(--border-muted)`,
+                background: isLight ? "rgba(220,220,235,0.3)" : "rgba(9,9,11,0.2)",
+                color: "var(--text-muted)",
+                opacity: 0.35,
+              };
+            } else if (status === "found" && isMid) {
+              cardStyle = {
+                border: "1px solid #10b981",
+                background: "rgba(16,185,129,0.15)",
+                color: "#10b981",
+                boxShadow: "0 0 15px rgba(16,185,129,0.35)",
+                transform: "scale(1.10)",
+                outline: "2px solid rgba(16,185,129,0.4)",
+              };
+            } else if (isMid) {
+              cardStyle = {
+                border: "1px solid #f59e0b",
+                background: "rgba(245,158,11,0.10)",
+                color: "#f59e0b",
+                boxShadow: "0 0 10px rgba(245,158,11,0.2)",
+                transform: "scale(1.05)",
+                outline: "1px solid rgba(245,158,11,0.3)",
+              };
+            } else if (isLeft && isRight) {
+              cardStyle = {
+                border: "1px solid #06b6d4",
+                background: "rgba(6,182,212,0.10)",
+                color: "#06b6d4",
+                boxShadow: "0 0 10px rgba(6,182,212,0.2)",
+              };
+            } else if (isLeft) {
+              cardStyle = {
+                border: "1px solid #14b8a6",
+                background: "rgba(20,184,166,0.10)",
+                color: "#14b8a6",
+                boxShadow: "0 0 10px rgba(20,184,166,0.15)",
+              };
+            } else if (isRight) {
+              cardStyle = {
+                border: "1px solid #0ea5e9",
+                background: "rgba(14,165,233,0.10)",
+                color: "#0ea5e9",
+                boxShadow: "0 0 10px rgba(14,165,233,0.15)",
+              };
+            } else {
+              cardStyle = {
+                border: `1px solid var(--border-default)`,
+                background: "var(--bg-tag)",
+                color: "var(--text-secondary)",
+              };
             }
 
-            // Height scaling for aesthetic flow
             const heightPercent = 35 + (val / 100) * 55;
 
             return (
@@ -145,19 +203,13 @@ const AlgoVisualizer = () => {
                 className="flex flex-col items-center flex-1 mx-0.5 max-w-[32px] transition-all duration-300"
                 style={{ height: "100%" }}
               >
-                <div 
-                  className={`w-full rounded-md border flex items-center justify-center font-mono text-[10px] sm:text-xs font-semibold transition-all duration-300 ${cardStyle}`}
-                  style={{ 
-                    height: `${heightPercent}%`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
+                <div
+                  className={className}
+                  style={{ height: `${heightPercent}%`, ...cardStyle, display: "flex", alignItems: "center", justifyContent: "center" }}
                 >
                   <span className="hidden sm:inline">{val}</span>
                   <span className="sm:hidden text-[9px]">{val}</span>
                 </div>
-                {/* Pointer indicator labels */}
                 <div className="h-5 flex items-center justify-center font-mono text-[9px] font-bold mt-1 select-none">
                   {isMid && <span className={status === "found" ? "text-emerald-400 text-xs animate-bounce" : "text-amber-500"}>M</span>}
                   {!isMid && isLeft && isRight && <span className="text-cyan-400">L&R</span>}
@@ -169,48 +221,57 @@ const AlgoVisualizer = () => {
           })}
         </div>
 
-        {/* Targets selector */}
+        {/* Target selector */}
         <div className="flex flex-wrap items-center gap-2 mb-6">
-          <span className="text-[10px] font-mono text-zinc-400 uppercase">Target:</span>
-          {ARRAY.map((val) => (
-            <button
-              key={val}
-              onClick={() => handleTargetChange(val)}
-              className={`px-2 py-0.5 rounded text-[10px] sm:text-xs font-mono border transition-all ${
-                target === val
-                  ? "bg-cyan-500/20 border-cyan-500 text-cyan-300"
-                  : "bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
-              }`}
-            >
-              {val}
-            </button>
-          ))}
-          <button
-            onClick={() => handleTargetChange(99)} // out of bound target for test
-            className={`px-2 py-0.5 rounded text-[10px] sm:text-xs font-mono border transition-all ${
-              target === 99
-                ? "bg-cyan-500/20 border-cyan-500 text-cyan-300"
-                : "bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
-            }`}
-          >
-            99 (Err)
-          </button>
+          <span className="text-[10px] font-mono uppercase" style={{ color: "var(--text-muted)" }}>Target:</span>
+          {[...ARRAY, 99].map((val) => {
+            const isTarget = target === val;
+            const label = val === 99 ? "99 (Err)" : val;
+            return (
+              <button
+                key={val}
+                onClick={() => handleTargetChange(val)}
+                className="px-2 py-0.5 rounded text-[10px] sm:text-xs font-mono border transition-all"
+                style={
+                  isTarget
+                    ? { background: "rgba(6,182,212,0.15)", borderColor: "#06b6d4", color: "#67e8f9" }
+                    : {
+                        background: "var(--bg-tag)",
+                        borderColor: "var(--border-default)",
+                        color: "var(--text-secondary)",
+                      }
+                }
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       <div>
-        {/* Simulator Outputs Console */}
-        <div className="bg-zinc-950/80 border border-zinc-850 rounded-lg p-3 h-28 overflow-y-auto mb-4 font-mono text-[10px] text-zinc-400 space-y-1.5 scrollbar-thin select-text">
+        {/* Log console */}
+        <div
+          className="rounded-lg p-3 h-28 overflow-y-auto mb-4 font-mono text-[10px] space-y-1.5 scrollbar-thin select-text"
+          style={{
+            background: isLight ? "rgba(228,228,244,0.7)" : "rgba(9,9,11,0.8)",
+            border: "1px solid var(--border-default)",
+          }}
+        >
           {logs.map((log, idx) => (
-            <div key={idx} className={
-              log.startsWith("[SUCCESS]") 
-                ? "text-emerald-400 font-medium" 
-                : log.startsWith("[FAIL]") 
-                  ? "text-red-400 font-medium" 
-                  : log.startsWith("Step:")
-                    ? "text-zinc-200"
-                    : "text-zinc-400"
-            }>
+            <div
+              key={idx}
+              style={{
+                color: log.startsWith("[SUCCESS]")
+                  ? "#34d399"
+                  : log.startsWith("[FAIL]")
+                    ? "#f87171"
+                    : log.startsWith("Step:")
+                      ? isLight ? "#18181b" : "#f4f4f5"
+                      : "var(--text-muted)",
+                fontWeight: (log.startsWith("[SUCCESS]") || log.startsWith("[FAIL]")) ? 500 : 400,
+              }}
+            >
               {log}
             </div>
           ))}
@@ -220,23 +281,34 @@ const AlgoVisualizer = () => {
         <div className="grid grid-cols-3 gap-2">
           <button
             onClick={stepSearch}
-            className="px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-200 font-mono text-xs hover:text-white transition-all"
+            className="px-3 py-2 rounded-lg font-mono text-xs transition-all"
+            style={{
+              background: "var(--bg-tag)",
+              border: "1px solid var(--border-default)",
+              color: "var(--text-secondary)",
+            }}
           >
             Step
           </button>
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className={`px-3 py-2 rounded-lg font-mono text-xs font-semibold transition-all ${
+            className="px-3 py-2 rounded-lg font-mono text-xs font-semibold transition-all"
+            style={
               isPlaying
-                ? "bg-amber-600/20 border border-amber-500 text-amber-300 hover:bg-amber-600/30"
-                : "bg-emerald-600/20 border border-emerald-500 text-emerald-300 hover:bg-emerald-600/30"
-            }`}
+                ? { background: "rgba(245,158,11,0.15)", border: "1px solid #f59e0b", color: "#fcd34d" }
+                : { background: "rgba(16,185,129,0.15)", border: "1px solid #10b981", color: "#6ee7b7" }
+            }
           >
             {isPlaying ? "Pause" : "Run"}
           </button>
           <button
             onClick={() => resetSearch()}
-            className="px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-400 font-mono text-xs hover:text-zinc-200 transition-all"
+            className="px-3 py-2 rounded-lg font-mono text-xs transition-all"
+            style={{
+              background: "var(--bg-tag)",
+              border: "1px solid var(--border-default)",
+              color: "var(--text-muted)",
+            }}
           >
             Reset
           </button>

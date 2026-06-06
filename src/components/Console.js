@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTheme } from "./theme/ThemeContext";
 
 const BOOT_LOGS = [
   { type: "sys", text: "Initializing Yeabsira's portfolio terminal v2.5.0..." },
@@ -72,6 +73,8 @@ const Console = () => {
   const consoleEndRef = useRef(null);
   const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
   // Handle boot sequence
   useEffect(() => {
@@ -146,19 +149,64 @@ const Console = () => {
     }
   };
 
+  // Theme-aware colours
+  const colors = {
+    wrap: isLight
+      ? { background: "rgba(241,241,248,0.92)", border: "1px solid var(--border-default)" }
+      : { background: "rgba(18,18,24,0.80)", border: "1px solid #27272a" },
+    titleBar: isLight
+      ? { background: "#e4e4f0", borderBottom: "1px solid var(--border-default)" }
+      : { background: "#18181b", borderBottom: "1px solid #27272a" },
+    titleLabel: isLight ? "#71717a" : "#71717a",
+    scrollArea: isLight ? { background: "transparent" } : { background: "transparent" },
+    inputBar: isLight
+      ? { background: "rgba(228,228,244,0.85)", borderTop: "1px solid var(--border-muted)" }
+      : { background: "rgba(9,9,11,0.7)", borderTop: "1px solid rgba(39,39,42,0.5)" },
+    inputText: isLight ? "#18181b" : "#f4f4f5",
+    promptText: isLight ? "#10b981" : "#34d399",
+    logInput: isLight ? "#09090b" : "#f4f4f5",
+    logSys: "#22d3ee",
+    logOk: "#34d399",
+    logInfo: isLight ? "#52525b" : "#a1a1aa",
+    logCmdList: isLight ? "#3f3f46" : "#71717a",
+    logCmdItem: "#67e8f9",
+    logErr: "#f87171",
+    spinnerBorder: isLight ? "#71717a" : "#a1a1aa",
+    spinnerText: isLight ? "#71717a" : "#71717a",
+  };
+
+  const getLogStyle = (type) => {
+    switch (type) {
+      case "input":    return { color: colors.logInput, fontWeight: 500 };
+      case "sys":      return { color: colors.logSys, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" };
+      case "ok":       return { color: colors.logOk };
+      case "info":     return { color: colors.logInfo };
+      case "cmd-list": return { color: colors.logCmdList, fontWeight: 600 };
+      case "cmd-item": return { color: colors.logCmdItem, whiteSpace: "pre" };
+      case "err":      return { color: colors.logErr, fontWeight: 500 };
+      default:         return { color: colors.logInfo };
+    }
+  };
+
   return (
-    <div 
-      className="glass-card rounded-2xl w-full h-[320px] md:h-[380px] font-mono text-[11px] sm:text-xs md:text-sm shadow-2xl flex flex-col overflow-hidden border border-zinc-800 neon-glow-cyan"
+    <div
+      className="rounded-2xl w-full h-[320px] md:h-[380px] font-mono text-[11px] sm:text-xs md:text-sm shadow-2xl flex flex-col overflow-hidden neon-glow-cyan"
+      style={{
+        ...colors.wrap,
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        transition: "var(--transition-theme)",
+      }}
       onClick={focusInput}
     >
       {/* Terminal Title Bar */}
-      <div className="bg-zinc-900 px-4 py-2 flex items-center justify-between border-b border-zinc-800 select-none">
+      <div className="px-4 py-2 flex items-center justify-between select-none" style={colors.titleBar}>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
           <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
           <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
         </div>
-        <div className="text-zinc-400 font-semibold text-[10px] md:text-[11px] uppercase tracking-wider">
+        <div className="font-semibold text-[10px] md:text-[11px] uppercase tracking-wider" style={{ color: colors.titleLabel }}>
           yeabsira_terminal_sh
         </div>
         <div className="w-12 text-right text-[10px] text-cyan-400 font-medium">
@@ -167,66 +215,15 @@ const Console = () => {
       </div>
 
       {/* Terminal Logs Area */}
-      <div ref={scrollAreaRef} className="flex-1 p-4 overflow-y-auto space-y-2 select-text scrollbar-thin scrollbar-thumb-zinc-800">
-        {history.map((log, idx) => {
-          if (log.type === "input") {
-            return (
-              <div key={idx} className="text-zinc-100 font-medium">
-                {log.text}
-              </div>
-            );
-          }
-          if (log.type === "sys") {
-            return (
-              <div key={idx} className="text-cyan-400 font-semibold uppercase tracking-wide">
-                {log.text}
-              </div>
-            );
-          }
-          if (log.type === "ok") {
-            return (
-              <div key={idx} className="text-emerald-400">
-                {log.text}
-              </div>
-            );
-          }
-          if (log.type === "info") {
-            return (
-              <div key={idx} className="text-zinc-300">
-                {log.text}
-              </div>
-            );
-          }
-          if (log.type === "cmd-list") {
-            return (
-              <div key={idx} className="text-zinc-400 font-semibold">
-                {log.text}
-              </div>
-            );
-          }
-          if (log.type === "cmd-item") {
-            return (
-              <div key={idx} className="text-cyan-300 whitespace-pre">
-                {log.text}
-              </div>
-            );
-          }
-          if (log.type === "err") {
-            return (
-              <div key={idx} className="text-red-400 font-medium">
-                {log.text}
-              </div>
-            );
-          }
-          return (
-            <div key={idx} className="text-zinc-300">
-              {log.text}
-            </div>
-          );
-        })}
+      <div ref={scrollAreaRef} className="flex-1 p-4 overflow-y-auto space-y-2 select-text scrollbar-thin" style={colors.scrollArea}>
+        {history.map((log, idx) => (
+          <div key={idx} style={getLogStyle(log.type)}>
+            {log.text}
+          </div>
+        ))}
         {booting && (
-          <div className="inline-flex gap-2 items-center text-zinc-500">
-            <span className="w-2.5 h-2.5 rounded-full border border-t-transparent border-zinc-400 animate-spin" />
+          <div className="inline-flex gap-2 items-center" style={{ color: colors.spinnerText }}>
+            <span className="w-2.5 h-2.5 rounded-full border border-t-transparent animate-spin" style={{ borderColor: colors.spinnerBorder, borderTopColor: "transparent" }} />
             <span>Loading database...</span>
           </div>
         )}
@@ -235,13 +232,14 @@ const Console = () => {
 
       {/* Terminal Input Line */}
       {!booting && (
-        <form onSubmit={onSubmit} className="bg-zinc-950/70 border-t border-zinc-800/50 p-3 flex items-center gap-1.5 select-none">
-          <span className="text-emerald-400 shrink-0 font-medium">visitor@dryeab.io:~$</span>
+        <form onSubmit={onSubmit} className="border-t p-3 flex items-center gap-1.5 select-none" style={colors.inputBar}>
+          <span className="shrink-0 font-medium" style={{ color: colors.promptText }}>visitor@dryeab.io:~$</span>
           <div className="flex-1 relative flex items-center">
             <input
               ref={inputRef}
               type="text"
-              className="w-full bg-transparent border-none outline-none text-zinc-100 font-mono caret-transparent focus:ring-0 p-0 text-[11px] sm:text-xs md:text-sm"
+              className="w-full bg-transparent border-none outline-none font-mono caret-transparent focus:ring-0 p-0 text-[11px] sm:text-xs md:text-sm"
+              style={{ color: colors.inputText }}
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               autoComplete="off"
@@ -250,9 +248,10 @@ const Console = () => {
               spellCheck="false"
               placeholder="type commands..."
             />
-            <span 
-              className="absolute pointer-events-none text-zinc-100 font-mono text-[11px] sm:text-xs md:text-sm left-0 cursor-blink"
+            <span
+              className="absolute pointer-events-none font-mono text-[11px] sm:text-xs md:text-sm left-0 cursor-blink"
               style={{
+                color: colors.inputText,
                 transform: `translateX(${inputVal.length * 0.6}em)`,
                 display: inputRef.current === document.activeElement ? "inline-block" : "none"
               }}
