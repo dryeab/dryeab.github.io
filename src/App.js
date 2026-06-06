@@ -65,11 +65,11 @@ function App() {
 
       <main className="flex-1 relative z-10 radial-glow-bottom pt-16 md:pt-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12 pt-4 pb-10 md:pt-6 md:pb-16">
-          
+
           {/* HERO SECTION */}
           <section id="about" className="scroll-mt-28 pt-2 pb-6 md:pt-4 md:pb-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              
+
               {/* Intro Card */}
               <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
                 <div className="inline-flex items-center gap-2">
@@ -134,7 +134,7 @@ function App() {
                   style={{ borderColor: "var(--border-default)" }}
                 >
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-500/5 to-transparent rounded-bl-full pointer-events-none" />
-                  
+
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
                     <h4 className="text-base font-bold font-sans max-w-xs" style={{ color: "var(--text-heading)" }}>
                       {edu.url ? (
@@ -258,7 +258,7 @@ function App() {
                     className="absolute top-[-50%] right-[-50%] w-48 h-48 rounded-full border pointer-events-none group-hover:border-cyan-500/20 transition-all"
                     style={{ background: "var(--bg-card)", borderColor: "var(--border-subtle)" }}
                   />
-                  
+
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[10px] font-mono tracking-widest uppercase" style={{ color: "var(--text-muted)" }}>
@@ -276,7 +276,7 @@ function App() {
                         </a>
                       )}
                     </div>
-                    
+
                     <h4 className="text-base sm:text-lg font-bold font-sans tracking-tight" style={{ color: "var(--text-heading)" }}>
                       {p.name}
                     </h4>
@@ -360,7 +360,7 @@ function App() {
           {/* SKILLS SECTION */}
           <Section id="skills" title="Skills" icon={FiTerminal}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
+
               {/* Languages Card */}
               <div className="glass-card rounded-2xl p-6 flex flex-col justify-between" style={{ borderColor: "var(--border-default)" }}>
                 <div>
@@ -417,12 +417,12 @@ function App() {
               <div className="mb-8 flex items-center gap-4">
                 <FiAward className="w-5 h-5 text-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.3)]" />
                 <h2 className="text-lg md:text-xl font-bold tracking-widest uppercase font-mono" style={{ color: "var(--text-heading)" }}>
-                  Awards &amp; Key Activities
+                  Awards &amp; Activities
                 </h2>
                 <div className="h-[1px] flex-1" style={{ backgroundImage: "linear-gradient(to right, var(--border-default), transparent)" }} />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+
                 {/* LeetCode Guardian Card */}
                 <a
                   href="https://leetcode.com/u/dryeab/"
@@ -583,7 +583,7 @@ function App() {
           <Section id="contact" title="Contact" icon={FiMail}>
             <div className="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden" style={{ borderColor: "var(--border-default)" }}>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-500/5 to-transparent rounded-tl-full pointer-events-none" />
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                 <div>
                   <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400 mb-1">
