@@ -7,6 +7,7 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import cv from "./data/cv";
 import Experience from "./components/Experience";
+import Skills from "./components/Skills";
 import AccordionList from "./components/Accordion";
 
 function Section({ id, title, icon: Icon, children }) {
@@ -205,58 +206,7 @@ function App() {
 
           {/* SKILLS SECTION */}
           <Section id="skills" title="Skills" icon={FiTerminal}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-              {/* Languages Card */}
-              <div className="glass-card rounded-2xl p-6 flex flex-col justify-between" style={{ borderColor: "var(--border-default)" }}>
-                <div>
-                  <h4 className="text-sm font-bold tracking-wider uppercase font-mono mb-4 text-cyan-400">
-                    Languages
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.programmingLanguages.map((s) => (
-                      <span
-                        key={s}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono transition-all hover:text-white hover:border-cyan-500/30"
-                        style={{
-                          borderColor: "var(--border-default)",
-                          border: "1px solid var(--border-default)",
-                          background: "var(--bg-tag)",
-                          color: "var(--text-secondary)",
-                        }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Frameworks & Tech Card */}
-              <div className="glass-card rounded-2xl p-6 md:col-span-2 flex flex-col justify-between" style={{ borderColor: "var(--border-default)" }}>
-                <div>
-                  <h4 className="text-sm font-bold tracking-wider uppercase font-mono mb-4 text-cyan-400">
-                    Technologies &amp; Frameworks
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.technologies.map((s) => (
-                      <span
-                        key={s}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono transition-all hover:text-white hover:border-emerald-500/30"
-                        style={{
-                          border: "1px solid var(--border-default)",
-                          background: "var(--bg-tag)",
-                          color: "var(--text-secondary)",
-                        }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            <Skills groups={skills.groups} />
 
             {/* Awards and Activities Bento Cards */}
             <div className="mt-12">
