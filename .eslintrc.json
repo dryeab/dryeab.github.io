@@ -1,0 +1,13 @@
+{
+  "extends": ["react-app", "react-app/jest", "prettier"],
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "eqeqeq": ["warn", "smart"],
+    "no-var": "warn",
+    "prefer-const": "warn",
+    "object-shorthand": "warn"
+  }
+}

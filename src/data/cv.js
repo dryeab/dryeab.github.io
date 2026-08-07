@@ -82,9 +82,7 @@ const cv = {
       url: "https://github.com/dryeab/mcp-telegram",
       tags: ["Model Context Protocol", "Telegram API", "Python", "uv"],
       command: "uv tool install mcp-telegram",
-      bullets: [
-        "Connect Large Language Models to Telegram via the Model Context Protocol (MCP).",
-      ],
+      bullets: ["Connect Large Language Models to Telegram via the Model Context Protocol (MCP)."],
     },
     {
       name: "VAIS (Voice-assisted Agricultural Information System)",
@@ -167,4 +165,3 @@ const cv = {
 };
 
 export default cv;
-

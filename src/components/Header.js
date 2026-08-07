@@ -1,15 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { useTheme } from "../theme/ThemeContext";
 
-const links = [
+const LINKS = [
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
 ];
 
-/* ── Sun icon (light mode indicator) ── */
+/** Smooth scrolling takes roughly this long; the scroll spy is muted until it settles. */
+const SCROLL_SETTLE_MS = 1000;
+
+const HAMBURGER_BARS = [
+  { open: "top-2 rotate-45", closed: "top-0.5" },
+  { open: "top-2 opacity-0 scale-0", closed: "top-2 opacity-100 scale-100" },
+  { open: "top-2 -rotate-45", closed: "top-[13px]" },
+];
+
 const SunIcon = () => (
-  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="11"
+    height="11"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <circle cx="12" cy="12" r="5" />
     <line x1="12" y1="1" x2="12" y2="3" />
     <line x1="12" y1="21" x2="12" y2="23" />
@@ -22,62 +40,52 @@ const SunIcon = () => (
   </svg>
 );
 
-/* ── Moon icon (dark mode indicator) ── */
 const MoonIcon = () => (
   <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </svg>
 );
 
-/* ── Animated Toggle ── */
 const ThemeToggle = () => {
   const { theme, toggle } = useTheme();
   const isLight = theme === "light";
+  const label = isLight ? "Switch to dark mode" : "Switch to light mode";
 
   return (
     <button
       type="button"
-      aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
+      aria-label={label}
+      title={label}
       onClick={toggle}
       className="theme-toggle-btn"
-      title={isLight ? "Switch to dark mode" : "Switch to light mode"}
     >
       <span className="theme-toggle-thumb">
         {isLight ? (
-          <span style={{ color: "#ffffff" }}><SunIcon /></span>
+          <span style={{ color: "#ffffff" }}>
+            <SunIcon />
+          </span>
         ) : (
-          <span style={{ color: "#c7d2fe" }}><MoonIcon /></span>
+          <span style={{ color: "#c7d2fe" }}>
+            <MoonIcon />
+          </span>
         )}
       </span>
     </button>
   );
 };
 
-const Header = () => {
-  const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const firstMobileLinkRef = useRef(null);
-  const isScrolling = useRef(false);
-  const linkRefs = useRef({});
+/**
+ * One underline shared by every link, moved to the active one — a per-link
+ * element would unmount and remount, which cannot be transitioned.
+ */
+const useNavIndicator = (linkRefs, activeSection) => {
   const [indicator, setIndicator] = useState({ left: 0, width: 0, top: 0, visible: false });
-  const { theme } = useTheme();
-  const isLight = theme === "light";
 
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 768) setOpen(false);
-    };
+    let cancelled = false;
 
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  /**
-   * One underline shared by every link, moved to the active one — a per-link
-   * element would unmount and remount, which cannot be transitioned.
-   */
-  useEffect(() => {
     const measure = () => {
+      if (cancelled) return;
       const el = linkRefs.current[activeSection];
       if (!el) {
         setIndicator((prev) => ({ ...prev, visible: false }));
@@ -95,56 +103,23 @@ const Header = () => {
 
     // Widths shift on resize, and again once the webfont swaps in
     window.addEventListener("resize", measure);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(measure).catch(() => {});
-    }
-    return () => window.removeEventListener("resize", measure);
-  }, [activeSection]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.fonts?.ready.then(measure).catch(() => {});
 
     return () => {
-      document.body.style.overflow = prevOverflow;
+      cancelled = true;
+      window.removeEventListener("resize", measure);
     };
-  }, [open]);
+  }, [linkRefs, activeSection]);
+
+  return indicator;
+};
+
+/** Tracks which nav section is in view, unless a click-triggered scroll is in flight. */
+const useScrollSpy = (isScrolling) => {
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
-    if (!open) return;
-    const t = window.setTimeout(() => {
-      firstMobileLinkRef.current?.focus();
-    }, 50);
-    return () => window.clearTimeout(t);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (e) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
-
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    setActiveSection(href);
-    isScrolling.current = true;
-    
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    
-    // Reset scroll locking after animation
-    setTimeout(() => {
-      isScrolling.current = false;
-    }, 1000);
-  };
-
-  // Scroll spy using IntersectionObserver
-  useEffect(() => {
-    const sectionIds = links.map((l) => l.href.substring(1));
+    const sectionIds = LINKS.map((l) => l.href.slice(1));
     const intersecting = {};
 
     const observer = new IntersectionObserver(
@@ -171,7 +146,73 @@ const Header = () => {
     });
 
     return () => observer.disconnect();
+  }, [isScrolling]);
+
+  return [activeSection, setActiveSection];
+};
+
+const Header = () => {
+  const [open, setOpen] = useState(false);
+  const firstMobileLinkRef = useRef(null);
+  const linkRefs = useRef({});
+  const isScrolling = useRef(false);
+  const scrollTimer = useRef(null);
+
+  const [activeSection, setActiveSection] = useScrollSpy(isScrolling);
+  const indicator = useNavIndicator(linkRefs, activeSection);
+
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) setOpen(false);
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  // While the mobile drawer is open: lock the page, close on Escape, and move
+  // focus into the drawer once its entry transition has started.
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+
+    const focusTimer = window.setTimeout(() => firstMobileLinkRef.current?.focus(), 50);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      window.clearTimeout(focusTimer);
+    };
+  }, [open]);
+
+  useEffect(() => () => window.clearTimeout(scrollTimer.current), []);
+
+  const handleNavClick = useCallback(
+    (e, href) => {
+      e.preventDefault();
+      setActiveSection(href);
+
+      // Mute the scroll spy so it doesn't fight the smooth scroll it triggers.
+      isScrolling.current = true;
+      window.clearTimeout(scrollTimer.current);
+      scrollTimer.current = window.setTimeout(() => {
+        isScrolling.current = false;
+      }, SCROLL_SETTLE_MS);
+
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    },
+    [setActiveSection]
+  );
 
   return (
     <header
@@ -202,15 +243,14 @@ const Header = () => {
           </a>
         </div>
 
-        {/* Desktop Navbar */}
         <nav className="hidden md:flex flex-row items-center gap-x-8 relative">
-          {links.map((l) => {
-            const isActive = activeSection === l.href;
+          {LINKS.map((link) => {
+            const isActive = activeSection === link.href;
             return (
               <a
-                key={l.href}
+                key={link.href}
                 ref={(el) => {
-                  linkRefs.current[l.href] = el;
+                  linkRefs.current[link.href] = el;
                 }}
                 className={`font-sans text-sm font-medium transition-colors py-1 ${
                   isActive
@@ -219,15 +259,11 @@ const Header = () => {
                       ? "hover:text-zinc-700"
                       : "hover:text-zinc-200"
                 }`}
-                style={
-                  isActive
-                    ? {}
-                    : { color: "var(--text-secondary)" }
-                }
-                href={l.href}
-                onClick={(e) => handleNavClick(e, l.href)}
+                style={isActive ? undefined : { color: "var(--text-secondary)" }}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
               >
-                {l.label}
+                {link.label}
               </a>
             );
           })}
@@ -243,11 +279,9 @@ const Header = () => {
             aria-hidden="true"
           />
 
-          {/* Theme Toggle — desktop */}
           <ThemeToggle />
         </nav>
 
-        {/* Mobile right side: toggle + hamburger */}
         <div className="md:hidden flex items-center gap-3">
           <ThemeToggle />
           <button
@@ -262,43 +296,27 @@ const Header = () => {
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
             <div className="relative w-4 h-4">
-              <span
-                className={[
-                  "absolute left-0 w-4 h-[2px] rounded",
-                  "transition-all duration-350 ease-in-out",
-                  open ? "top-2 rotate-45" : "top-0.5",
-                ].join(" ")}
-                style={{ background: "var(--text-primary)" }}
-              />
-              <span
-                className={[
-                  "absolute left-0 w-4 h-[2px] rounded",
-                  "transition-all duration-350 ease-in-out",
-                  open ? "top-2 opacity-0 scale-0" : "top-2 opacity-100 scale-100",
-                ].join(" ")}
-                style={{ background: "var(--text-primary)" }}
-              />
-              <span
-                className={[
-                  "absolute left-0 w-4 h-[2px] rounded",
-                  "transition-all duration-350 ease-in-out",
-                  open ? "top-2 -rotate-45" : "top-[13px]",
-                ].join(" ")}
-                style={{ background: "var(--text-primary)" }}
-              />
+              {HAMBURGER_BARS.map((bar, index) => (
+                <span
+                  key={index}
+                  className={`absolute left-0 w-4 h-[2px] rounded transition-all ease-in-out ${
+                    open ? bar.open : bar.closed
+                  }`}
+                  style={{ background: "var(--text-primary)" }}
+                />
+              ))}
             </div>
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile drawer. Kept mounted so it can transition; links are pulled out
+          of the tab order while it is hidden. */}
       <div
-        className={[
-          "md:hidden fixed inset-0 z-50 transition-all duration-300",
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
-        ].join(" ")}
+        className={`md:hidden fixed inset-0 z-50 transition-all duration-300 ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
         aria-hidden={!open}
       >
         <button
@@ -306,15 +324,14 @@ const Header = () => {
           className="absolute inset-0 w-full h-full backdrop-blur-sm transition-opacity duration-300"
           style={{ background: "rgba(0,0,0,0.5)" }}
           aria-label="Close navigation overlay"
+          tabIndex={open ? 0 : -1}
           onClick={() => setOpen(false)}
         />
 
         <div
-          className={[
-            "absolute left-0 right-0 top-16 mx-6 rounded-2xl border shadow-2xl",
-            "transition-all duration-350 ease-in-out",
-            open ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95",
-          ].join(" ")}
+          className={`absolute left-0 right-0 top-16 mx-6 rounded-2xl border shadow-2xl transition-all ease-in-out ${
+            open ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+          }`}
           style={{
             background: "var(--bg-nav)",
             borderColor: "var(--border-default)",
@@ -325,12 +342,12 @@ const Header = () => {
           aria-modal="true"
         >
           <nav className="p-4 flex flex-col gap-1 font-sans">
-            {links.map((l, idx) => {
-              const isActive = activeSection === l.href;
+            {LINKS.map((link, index) => {
+              const isActive = activeSection === link.href;
               return (
                 <a
-                  key={l.href}
-                  ref={idx === 0 ? firstMobileLinkRef : null}
+                  key={link.href}
+                  ref={index === 0 ? firstMobileLinkRef : null}
                   className={`rounded-xl px-4 py-3 transition-all font-medium flex items-center justify-between ${
                     isActive ? "text-cyan-400" : ""
                   }`}
@@ -338,14 +355,17 @@ const Header = () => {
                     background: isActive ? "rgba(6,182,212,0.08)" : "transparent",
                     color: isActive ? undefined : "var(--text-secondary)",
                   }}
-                  href={l.href}
+                  href={link.href}
+                  tabIndex={open ? 0 : -1}
                   onClick={(e) => {
-                    handleNavClick(e, l.href);
+                    handleNavClick(e, link.href);
                     setOpen(false);
                   }}
                 >
-                  <span>{l.label}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />}
+                  <span>{link.label}</span>
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+                  )}
                 </a>
               );
             })}
