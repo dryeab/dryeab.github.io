@@ -73,7 +73,7 @@ function App() {
                 I'm <span className="text-cyan-400">{name}</span>
               </h1>
 
-              <p className="leading-relaxed text-sm sm:text-base md:text-lg max-w-2xl font-sans" style={{ color: "var(--text-secondary)" }}>
+              <p className="leading-relaxed text-sm sm:text-base md:text-lg max-w-2xl about-text" style={{ color: "var(--text-secondary)" }}>
                 Software Engineer &amp; Data Scientist specializing in AI model alignment, system optimizations, and full-stack engineering. I solve algorithmic challenges and design scalable infrastructure.
               </p>
 
@@ -81,16 +81,17 @@ function App() {
               <div className="flex flex-wrap items-center gap-2 pt-3 -ml-2">
                 {[
                   { icon: FiMail, label: "Email", href: `mailto:${contact.email}` },
-                  { icon: FaGithub, label: "GitHub", href: `https://github.com/${contact.githubUsername}`, external: true },
-                  { icon: FaXTwitter, label: "X", href: `https://x.com/${contact.xUsername}`, external: true },
-                  { icon: FaLinkedinIn, label: "LinkedIn", href: `https://www.linkedin.com/in/${contact.linkedinUsername}`, external: true },
-                ].map(({ icon: Icon, label, href, external }) => (
+                  { icon: FaGithub, label: "GitHub", href: `https://github.com/${contact.githubUsername}` },
+                  { icon: FaXTwitter, label: "X", href: `https://x.com/${contact.xUsername}` },
+                  { icon: FaLinkedinIn, label: "LinkedIn", href: `https://www.linkedin.com/in/${contact.linkedinUsername}` },
+                ].map(({ icon: Icon, label, href }) => (
                   <a
                     key={label}
                     className="group relative p-2 flex items-center justify-center social-icon-link"
                     href={href}
                     aria-label={label}
-                    {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     <Icon className="w-6 h-6" />
                     <span className="icon-tooltip pointer-events-none absolute bottom-full left-1/2 mb-3 px-2.5 py-1 rounded-md text-[10px] font-mono tracking-wider uppercase whitespace-nowrap z-20">
