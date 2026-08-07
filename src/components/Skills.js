@@ -77,34 +77,34 @@ const ICONS = {
   Selenium: SiSelenium,
 };
 
-const SkillChip = ({ name }) => {
+const SkillItem = ({ name }) => {
   const Icon = ICONS[name] || FiCode;
   return (
-    <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono">
-      <Icon className="w-3 h-3 shrink-0 skill-chip-icon" />
+    <span className="skill-item inline-flex items-center gap-1.5 text-xs font-mono whitespace-nowrap">
+      <Icon className="w-3.5 h-3.5 shrink-0 skill-item-icon" />
       <span>{name}</span>
     </span>
   );
 };
 
-/** Label in the margin, chips beside it — same layout as the SideNote credentials. */
+/** Label in the margin, items beside it — same layout as the SideNote credentials. */
 const Skills = ({ groups }) => (
-  <div className="space-y-6">
+  <div className="space-y-4">
     {groups.map((group) => (
       <div
         key={group.label}
-        className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
+        className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-8"
       >
         <h3
-          className="shrink-0 sm:w-28 text-[11px] font-bold tracking-widest uppercase font-mono"
+          className="shrink-0 sm:w-24 text-[10px] font-bold tracking-widest uppercase font-mono"
           style={{ color: "var(--text-muted)" }}
         >
           {group.label}
         </h3>
 
-        <div className="flex-1 flex flex-wrap gap-2">
+        <div className="flex-1 flex flex-wrap gap-x-4 gap-y-2">
           {group.items.map((name) => (
-            <SkillChip key={name} name={name} />
+            <SkillItem key={name} name={name} />
           ))}
         </div>
       </div>

@@ -160,36 +160,24 @@ html.light .glass-card-hover:hover {
 }
 
 /* ────────────────────────────────────────────────
-   Skill chips
+   Skill items
 ──────────────────────────────────────────────── */
-.skill-chip {
-  background: var(--bg-tag);
-  border: 1px solid var(--border-default);
+.skill-item {
   color: var(--text-secondary);
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease,
-    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: color 0.2s ease;
 }
 
-.skill-chip .skill-chip-icon {
+.skill-item .skill-item-icon {
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
 
-.skill-chip:hover {
+.skill-item:hover {
   color: var(--text-heading);
-  border-color: rgba(6, 182, 212, 0.45);
-  background: rgba(6, 182, 212, 0.08);
-  transform: translateY(-2px);
 }
 
-.skill-chip:hover .skill-chip-icon {
+.skill-item:hover .skill-item-icon {
   color: #22d3ee;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skill-chip:hover {
-    transform: none;
-  }
 }
 
 /* ────────────────────────────────────────────────
