@@ -123,14 +123,6 @@ html.light .neon-glow-cyan {
   box-shadow: 0 0 12px rgba(6, 182, 212, 0.10), 0 0 24px rgba(6, 182, 212, 0.04);
 }
 
-.neon-glow-emerald {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 40px rgba(16, 185, 129, 0.05);
-}
-
-html.light .neon-glow-emerald {
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.10), 0 0 24px rgba(16, 185, 129, 0.04);
-}
-
 .neon-border-cyan:hover {
   border-color: rgba(6, 182, 212, 0.6);
   box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
@@ -165,6 +157,52 @@ html.light .neon-glow-emerald {
 html.light .glass-card-hover:hover {
   background: rgba(255, 255, 255, 0.95);
   border-color: rgba(6, 182, 212, 0.25);
+}
+
+/* ────────────────────────────────────────────────
+   Experience accordion
+──────────────────────────────────────────────── */
+/* Accent colours come from --accent-soft / --accent-ring, set per item in
+   Accordion.js, so Experience (cyan) and Projects (emerald) share this CSS. */
+.entry-card {
+  border: 1px solid var(--border-default);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.entry-card:hover {
+  border-color: var(--accent-ring, rgba(6, 182, 212, 0.45));
+  box-shadow: 0 0 0 1px var(--accent-soft, transparent), 0 8px 28px -12px var(--accent-ring, transparent);
+  transform: translateY(-2px);
+}
+
+.exp-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.exp-toggle:hover {
+  background: var(--accent-soft, rgba(6, 182, 212, 0.05));
+}
+
+.exp-toggle:focus-visible {
+  outline: 2px solid var(--accent-ring, rgba(6, 182, 212, 0.6));
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-card,
+  .entry-card:hover {
+    transform: none;
+  }
+}
+
+/* Respect reduced-motion: snap open instead of animating height */
+@media (prefers-reduced-motion: reduce) {
+  .exp-panel {
+    transition: none !important;
+  }
 }
 
 /* ────────────────────────────────────────────────
@@ -353,39 +391,6 @@ html.light footer {
   background: transparent !important;
 }
 html.light .footer-text { color: var(--text-muted) !important; }
-
-/* ── Algo Visualizer ── */
-html.light .algo-card-bg {
-  background: var(--bg-tag) !important;
-  border-color: var(--border-default) !important;
-}
-html.light .algo-log-area {
-  background: var(--bg-surface) !important;
-  border-color: var(--border-default) !important;
-}
-html.light .algo-btn {
-  background: var(--bg-tag) !important;
-  border-color: var(--border-default) !important;
-  color: var(--text-secondary) !important;
-}
-html.light .algo-btn:hover {
-  color: var(--text-heading) !important;
-  border-color: #a0a0bc !important;
-}
-html.light .algo-target-btn {
-  background: rgba(228, 228, 244, 0.6) !important;
-  border-color: var(--border-default) !important;
-  color: var(--text-secondary) !important;
-}
-html.light .algo-target-btn:hover {
-  border-color: #a0a0bc !important;
-  color: var(--text-heading) !important;
-}
-html.light .algo-bar-default {
-  background: var(--bg-tag) !important;
-  border-color: var(--border-default) !important;
-  color: var(--text-secondary) !important;
-}
 
 /* ── Theme Toggle Button ── */
 .theme-toggle-btn {

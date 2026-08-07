@@ -77,19 +77,21 @@ const cv = {
   ],
   projects: [
     {
+      name: "mcp-telegram",
+      url: "https://github.com/dryeab/mcp-telegram",
+      tags: ["Model Context Protocol", "Telegram API", "Python", "uv"],
+      command: "uv tool install mcp-telegram",
+      bullets: [
+        "Connect Large Language Models to Telegram via the Model Context Protocol (MCP).",
+      ],
+    },
+    {
       name: "VAIS (Voice-assisted Agricultural Information System)",
+      tags: ["LSTM", "Transformers", "NLP", "Python"],
       bullets: [
         "Developed and enhanced Amharic language model using LSTM and fine-tuned transformers.",
         "Improved the performance of agricultural chatbot to facilitate better communication with Amharic-speaking farmers.",
         "Collaborated with a team of five to achieve project goals.",
-      ],
-    },
-    {
-      name: "mcp-telegram",
-      url: "https://github.com/dryeab/mcp-telegram",
-      bullets: [
-        "Connect Large Language Models to Telegram via the Model Context Protocol (MCP).",
-        "uv tool install mcp-telegram",
       ],
     },
   ],

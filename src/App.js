@@ -6,8 +6,8 @@ import { SiLeetcode } from "react-icons/si";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import cv from "./data/cv";
-import AlgoVisualizer from "./components/AlgoVisualizer";
-import { useTheme } from "./components/theme/ThemeContext";
+import Experience from "./components/Experience";
+import AccordionList from "./components/Accordion";
 
 function Section({ id, title, icon: Icon, children }) {
   return (
@@ -113,8 +113,6 @@ function App() {
     skills,
   } = cv;
 
-  const { theme } = useTheme();
-
   return (
     <div
       className="min-h-screen flex flex-col justify-between relative obsidian-grid radial-glow-cyan portfolio-root"
@@ -142,7 +140,7 @@ function App() {
           {/* HERO SECTION */}
           <section id="about" className="scroll-mt-28 pt-4 pb-10 md:pt-10 md:pb-16">
             <div className="max-w-3xl flex flex-col space-y-6">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
                 I'm <span className="text-cyan-400">{name}</span>
               </h1>
 
@@ -178,170 +176,31 @@ function App() {
 
           {/* EXPERIENCE SECTION */}
           <Section id="experience" title="Experience" icon={FiTerminal}>
-            <div
-              className="relative pl-6 ml-2 space-y-10 py-2"
-              style={{ borderLeft: "1px solid var(--border-default)" }}
-            >
-              {experience.map((job) => (
-                <div key={job.role} className="relative group">
-                  {/* Timeline Node */}
-                  <span
-                    className="absolute left-[-31px] top-1.5 w-2.5 h-2.5 rounded-full border-2 border-cyan-400 z-20 group-hover:scale-125 transition-transform"
-                    style={{ backgroundColor: "var(--bg-base)" }}
-                  />
-                  <span className="absolute left-[-31px] top-1.5 w-2.5 h-2.5 rounded-full bg-cyan-400/50 animate-ping z-10" />
-
-                  <div
-                    className="glass-card rounded-2xl p-6 hover:scale-[1.005] transition-all"
-                    style={{ borderColor: "var(--border-default)" }}
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                      <h4 className="text-base sm:text-lg font-bold tracking-tight font-sans" style={{ color: "var(--text-heading)" }}>
-                        {job.url ? (
-                          <a
-                            href={job.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="transition-colors hover:text-cyan-500 dark:hover:text-cyan-400"
-                          >
-                            {job.role}
-                            <FiExternalLink className="inline-block w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 ml-1.5 align-middle -translate-y-0.5" />
-                          </a>
-                        ) : (
-                          job.role
-                        )}
-                      </h4>
-                      <span className="text-xs font-mono text-emerald-400 font-semibold whitespace-nowrap px-2 py-0.5 rounded self-start sm:self-center"
-                        style={{ background: theme === "light" ? "rgba(16,185,129,0.08)" : "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.2)" }}>
-                        {job.period}
-                      </span>
-                    </div>
-
-                    <ul className="space-y-2.5 text-sm font-sans" style={{ color: "var(--text-secondary)" }}>
-                      {job.bullets.map((b, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-3 leading-relaxed">
-                          <span className="mt-1 text-cyan-400 shrink-0 select-none" style={{ fontSize: '12px', lineHeight: '1.6' }}>›</span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Experience experience={experience} />
           </Section>
 
           {/* PROJECTS SECTION */}
           <Section id="projects" title="Projects" icon={FiTerminal}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {projects.map((p) => (
-                <div
-                  key={p.name}
-                  className="glass-card rounded-2xl p-6 transition-all flex flex-col justify-between group relative overflow-hidden hover:scale-[1.01]"
-                  style={{ borderColor: "var(--border-default)" }}
-                >
-                  {/* Cyber Grid border element */}
-                  <div
-                    className="absolute top-[-50%] right-[-50%] w-48 h-48 rounded-full border pointer-events-none group-hover:border-cyan-500/20 transition-all"
-                    style={{ background: "var(--bg-card)", borderColor: "var(--border-subtle)" }}
-                  />
+            <AccordionList
+              accent="emerald"
+              items={projects.map((p, i) => ({
+                title: p.name,
+                subtitle: "Open Source",
+                tags: p.tags,
+                bullets: p.bullets,
+                url: p.url,
+                command: p.command,
+                linkLabel: "View repository",
+                monoTitle: true,
+                watermark: String(i + 1).padStart(2, "0"),
+                leading: (
+                  <span className="shrink-0 w-10 mt-0.5 text-sm font-mono font-bold text-emerald-400/70 tabular-nums">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                ),
+              }))}
+            />
 
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-mono tracking-widest uppercase" style={{ color: "var(--text-muted)" }}>
-                        Open Source
-                      </span>
-                      {p.url && (
-                        <a
-                          href={p.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
-                        >
-                          <span>Repo</span>
-                          <FiExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                    </div>
-
-                    <h4 className="text-base sm:text-lg font-bold font-sans tracking-tight" style={{ color: "var(--text-heading)" }}>
-                      {p.name}
-                    </h4>
-
-                    <ul className="mt-4 space-y-2.5 text-xs sm:text-sm font-sans" style={{ color: "var(--text-secondary)" }}>
-                      {p.bullets.map((b, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-2.5 leading-relaxed">
-                          <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div
-                    className="mt-6 pt-4 flex flex-wrap gap-2"
-                    style={{ borderTop: "1px solid var(--border-muted)" }}
-                  >
-                    {p.name.includes("VAIS") ? (
-                      <>
-                        {["LSTM", "Transformers", "NLP", "Python"].map((tag) => (
-                          <span key={tag} className="text-[10px] font-mono text-cyan-300 px-2 py-0.5 rounded"
-                            style={{ background: "var(--bg-tag)", border: "1px solid var(--border-default)" }}>
-                            {tag}
-                          </span>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        {["Model Context Protocol", "Telegram API", "Python", "uv"].map((tag) => (
-                          <span key={tag} className="text-[10px] font-mono text-cyan-300 px-2 py-0.5 rounded"
-                            style={{ background: "var(--bg-tag)", border: "1px solid var(--border-default)" }}>
-                            {tag}
-                          </span>
-                        ))}
-                      </>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Algorithmic Visualizer */}
-            <div className="mt-16 pt-12" style={{ borderTop: "1px solid var(--border-muted)" }}>
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
-                  <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400">
-                    LeetCode Guardian Sandbox
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold font-sans tracking-tight" style={{ color: "var(--text-heading)" }}>
-                    Algorithmic Visualizer
-                  </h3>
-                  <p className="text-sm leading-relaxed font-sans" style={{ color: "var(--text-secondary)" }}>
-                    As an educator and competitive coder, I appreciate visual learning tools. This Binary Search simulation visually illustrates the logarithmic dividing process of search spaces:
-                  </p>
-                  <ul className="space-y-2 text-xs font-sans" style={{ color: "var(--text-secondary)" }}>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
-                      <span><strong>Left Boundary Pointer (L):</strong> Starts at index 0.</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                      <span><strong>Right Boundary Pointer (R):</strong> Starts at index N-1.</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                      <span><strong>Mid Pivot Pointer (M):</strong> Evaluated boundary centers.</span>
-                    </li>
-                  </ul>
-                  <p className="text-xs font-mono italic" style={{ color: "var(--text-muted)" }}>
-                    Try choosing a target element and clicking 'Step' or 'Run' to observe the pointer calculations live.
-                  </p>
-                </div>
-                <div className="lg:col-span-7 w-full">
-                  <AlgoVisualizer />
-                </div>
-              </div>
-            </div>
           </Section>
 
           {/* SKILLS SECTION */}
