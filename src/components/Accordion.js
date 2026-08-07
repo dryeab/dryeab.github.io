@@ -42,7 +42,6 @@ export function AccordionItem({
   url,
   linkLabel,
   leading,
-  watermark,
   monoTitle = false,
   defaultOpen = false,
   timeline = false,
@@ -81,17 +80,6 @@ export function AccordionItem({
             opacity: open ? 1 : 0,
           }}
         />
-
-        {/* Oversized index used as texture behind the card content */}
-        {watermark && (
-          <span
-            className="absolute right-4 bottom-0 pointer-events-none select-none font-mono font-bold leading-none z-0"
-            style={{ fontSize: "5.5rem", color: a.hex, opacity: 0.06 }}
-            aria-hidden="true"
-          >
-            {watermark}
-          </span>
-        )}
 
         {/* Accent edge — lights up while the entry is open */}
         <span

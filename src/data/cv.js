@@ -11,6 +11,7 @@ const cv = {
   education: [
     {
       title: "BSc in Software Engineering, Addis Ababa University",
+      url: "https://www.aau.edu.et/",
       period: "09/2015 – 07/2020",
       details: [
         {
@@ -139,11 +140,29 @@ const cv = {
       },
     ],
   },
-  awardsAndActivities: [
-    "Awarded Best Research Project among 2020 projects at Addis Ababa University.",
-    "Second Place in the 2023 Ethiopian Collegiate Programming Contest.",
-    "Achieved Leetcode's Guardian rank (Top 1% globally) with a rating over 2290, and solved 800+ questions.",
-    "Volunteered as a teaching assistant for the 2023 AddisCoder program , an intensive summer course on algorithms for high schoolers, led by experts like Prof. Jelani Nelson , Prof. Daniel Kang , Alex Krenstel and Heather Huynh .",
+  awards: [
+    {
+      title: "LeetCode Guardian",
+      details: ["Top 0.5% globally · 2290+ rating · 800+ problems solved"],
+      url: "https://leetcode.com/u/dryeab/",
+    },
+    {
+      title: "Second Place, EtCPC",
+      details: ["Ethiopian Collegiate Programming Contest"],
+      period: "2023",
+      url: "https://drive.google.com/file/d/1JxYQuRKIMc82NI7V_Vs6LjMhg59_eL0f/view?usp=sharing",
+    },
+    {
+      title: "AddisCoder Teaching Assistant",
+      details: ["Intensive algorithms course for high schoolers"],
+      period: "2023",
+      url: "https://drive.google.com/file/d/1-0WZPN4GzDiOn8Ucp209D0hIQGEYmyEs/view?usp=sharing",
+    },
+    {
+      title: "Best Research Project",
+      details: ["Agricultural NLP model development, Addis Ababa University"],
+      period: "2020",
+    },
   ],
 };
 
