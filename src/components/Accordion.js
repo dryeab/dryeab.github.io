@@ -35,11 +35,11 @@ export function AccordionItem({
       style={{ "--accent-soft": a.soft, "--accent-ring": a.ring }}
     >
       {/* Rail node. mt = card padding + half the title's line-height, so the dot
-          centres on the title at every breakpoint (20+12=32 / 24+14=38, less the
+          centres on the title at every breakpoint (16+12=28 / 20+14=34, less the
           dot's 5px radius). */}
       {timeline && (
         <span
-          className="shrink-0 w-2.5 h-2.5 rounded-full border-2 relative z-10 mt-[27px] sm:mt-[33px] transition-all duration-300"
+          className="shrink-0 w-2.5 h-2.5 rounded-full border-2 relative z-10 mt-[23px] sm:mt-[29px] transition-all duration-300"
           style={{
             backgroundColor: "var(--bg-base)",
             borderColor: a.hex,
@@ -69,7 +69,7 @@ export function AccordionItem({
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="exp-toggle relative z-10 w-full text-left p-5 sm:p-6 flex items-start gap-4"
+          className="exp-toggle relative z-10 w-full text-left p-4 sm:p-5 flex items-start gap-3"
         >
           <div className="flex-1 min-w-0">
             <h4
@@ -88,7 +88,7 @@ export function AccordionItem({
             )}
 
             {tags && tags.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-2.5 flex flex-wrap gap-2">
                 {tags.map((tag) => (
                   <span
                     key={tag}
@@ -107,7 +107,7 @@ export function AccordionItem({
           </div>
 
           <span
-            className="shrink-0 mt-1 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
+            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300"
             style={{
               border: "1px solid var(--border-default)",
               color: open ? a.hex : "var(--text-muted)",
@@ -128,10 +128,10 @@ export function AccordionItem({
           }}
         >
           <div className="overflow-hidden">
-            <div className="px-5 sm:px-6 pb-5 sm:pb-6">
-              <div className="pt-4" style={{ borderTop: "1px solid var(--border-muted)" }}>
+            <div className="px-4 sm:px-5 pb-4 sm:pb-5">
+              <div className="pt-3.5" style={{ borderTop: "1px solid var(--border-muted)" }}>
                 {children || (
-                  <ul className="space-y-2.5 text-sm font-sans" style={{ color: "var(--text-secondary)" }}>
+                  <ul className="space-y-2 text-sm font-sans" style={{ color: "var(--text-secondary)" }}>
                     {(bullets || []).map((b, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-3 leading-relaxed">
                         <span
@@ -184,7 +184,7 @@ export function AccordionItem({
 export default function AccordionList({ items, timeline = false, accent = "cyan" }) {
   if (!timeline) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-3">
         {items.map((item) => (
           <AccordionItem key={item.title} {...item} accent={accent} />
         ))}
@@ -193,7 +193,7 @@ export default function AccordionList({ items, timeline = false, accent = "cyan"
   }
 
   return (
-    <div className="relative space-y-4">
+    <div className="relative space-y-3">
       {/* Gradient spine, centred on the 10px rail dots (radius 5px) */}
       <span className="absolute top-0 bottom-0 w-px timeline-line left-[5px]" />
       {items.map((item) => (

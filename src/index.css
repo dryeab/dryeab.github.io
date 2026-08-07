@@ -160,6 +160,21 @@ html.light .glass-card-hover:hover {
 }
 
 /* ────────────────────────────────────────────────
+   Nav underline — one shared element that slides
+──────────────────────────────────────────────── */
+.nav-indicator {
+  left: 0;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-indicator {
+    transition: opacity 0.25s ease;
+  }
+}
+
+/* ────────────────────────────────────────────────
    Skill items
 ──────────────────────────────────────────────── */
 .skill-item {

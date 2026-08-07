@@ -16,7 +16,7 @@ import AccordionList from "./components/Accordion";
  */
 function SectionHeading({ title, icon: Icon, accent = "#22d3ee" }) {
   return (
-    <div className="mb-8 flex items-center gap-4">
+    <div className="mb-6 flex items-center gap-4">
       {Icon && (
         <span
           className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
@@ -49,7 +49,7 @@ function SectionHeading({ title, icon: Icon, accent = "#22d3ee" }) {
 
 function Section({ id, title, icon, accent, children }) {
   return (
-    <section id={id} className="scroll-mt-24 py-14" style={{ borderTop: "1px solid var(--border-muted)" }}>
+    <section id={id} className="scroll-mt-24 py-10 md:py-12" style={{ borderTop: "1px solid var(--border-muted)" }}>
       <SectionHeading title={title} icon={icon} accent={accent} />
       {children}
     </section>
@@ -165,7 +165,7 @@ function App() {
         <div className="mx-auto max-w-6xl px-6 md:px-12 pb-10 md:pb-16">
 
           {/* HERO SECTION */}
-          <section id="about" className="scroll-mt-28 pt-4 pb-10 md:pt-10 md:pb-16">
+          <section id="about" className="scroll-mt-28 pt-4 pb-8 md:pt-10 md:pb-12">
             <div className="max-w-3xl flex flex-col space-y-6">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
                 I'm <span className="text-cyan-400">{name}</span>
@@ -202,7 +202,7 @@ function App() {
           </section>
 
           {/* EXPERIENCE SECTION */}
-          <Section id="experience" title="Experience" icon={FiBriefcase} accent="#22d3ee">
+          <Section id="experience" title="Work Experience" icon={FiBriefcase} accent="#22d3ee">
             <Experience experience={experience} />
           </Section>
 
@@ -231,7 +231,7 @@ function App() {
 
 
           {/* CREDENTIALS — de-emphasized sidenotes, after the work sections */}
-          <div className="pt-10 space-y-8" style={{ borderTop: "1px solid var(--border-muted)" }}>
+          <div className="pt-10 space-y-6" style={{ borderTop: "1px solid var(--border-muted)" }}>
             <SideNote id="education" label="Education" entries={education} />
             <SideNote id="training" label="Training" entries={training} />
             <SideNote id="awards" label="Awards & Activities" entries={awards} />

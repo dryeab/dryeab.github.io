@@ -58,6 +58,8 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState("");
   const firstMobileLinkRef = useRef(null);
   const isScrolling = useRef(false);
+  const linkRefs = useRef({});
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, top: 0, visible: false });
   const { theme } = useTheme();
   const isLight = theme === "light";
 
@@ -69,6 +71,35 @@ const Header = () => {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  /**
+   * One underline shared by every link, moved to the active one — a per-link
+   * element would unmount and remount, which cannot be transitioned.
+   */
+  useEffect(() => {
+    const measure = () => {
+      const el = linkRefs.current[activeSection];
+      if (!el) {
+        setIndicator((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+      setIndicator({
+        left: el.offsetLeft,
+        width: el.offsetWidth,
+        top: el.offsetTop + el.offsetHeight - 2,
+        visible: true,
+      });
+    };
+
+    measure();
+
+    // Widths shift on resize, and again once the webfont swaps in
+    window.addEventListener("resize", measure);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(measure).catch(() => {});
+    }
+    return () => window.removeEventListener("resize", measure);
+  }, [activeSection]);
 
   useEffect(() => {
     if (!open) return;
@@ -172,13 +203,16 @@ const Header = () => {
         </div>
 
         {/* Desktop Navbar */}
-        <nav className="hidden md:flex flex-row flex-wrap items-center gap-x-8">
+        <nav className="hidden md:flex flex-row items-center gap-x-8 relative">
           {links.map((l) => {
             const isActive = activeSection === l.href;
             return (
               <a
                 key={l.href}
-                className={`font-sans text-sm font-medium transition-all relative py-1 ${
+                ref={(el) => {
+                  linkRefs.current[l.href] = el;
+                }}
+                className={`font-sans text-sm font-medium transition-colors py-1 ${
                   isActive
                     ? "text-cyan-400"
                     : isLight
@@ -194,12 +228,20 @@ const Header = () => {
                 onClick={(e) => handleNavClick(e, l.href)}
               >
                 {l.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 rounded shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
-                )}
               </a>
             );
           })}
+
+          <span
+            className="nav-indicator absolute h-[2px] rounded bg-cyan-400 pointer-events-none shadow-[0_0_8px_rgba(6,182,212,0.6)]"
+            style={{
+              transform: `translateX(${indicator.left}px)`,
+              width: `${indicator.width}px`,
+              top: `${indicator.top}px`,
+              opacity: indicator.visible ? 1 : 0,
+            }}
+            aria-hidden="true"
+          />
 
           {/* Theme Toggle — desktop */}
           <ThemeToggle />
