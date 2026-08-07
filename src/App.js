@@ -74,11 +74,11 @@ function App() {
               </h1>
 
               <p className="leading-relaxed text-sm sm:text-base md:text-lg max-w-2xl font-sans" style={{ color: "var(--text-secondary)" }}>
-                Software Engineer &amp; Data Scientist specializing in AI model alignment, system optimizations, and full-stack engineering. I solve complex algorithmic challenges and design scalable infrastructure.
+                Software Engineer &amp; Data Scientist specializing in AI model alignment, system optimizations, and full-stack engineering. I solve algorithmic challenges and design scalable infrastructure.
               </p>
 
-              {/* Social Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* Social Icons */}
+              <div className="flex flex-wrap items-center gap-2 pt-3 -ml-2">
                 {[
                   { icon: FiMail, label: "Email", href: `mailto:${contact.email}` },
                   { icon: FaGithub, label: "GitHub", href: `https://github.com/${contact.githubUsername}`, external: true },
@@ -87,17 +87,15 @@ function App() {
                 ].map(({ icon: Icon, label, href, external }) => (
                   <a
                     key={label}
-                    className="group w-11 h-11 flex items-center justify-center rounded-xl border transition-all neon-border-cyan"
-                    style={{
-                      borderColor: "var(--border-default)",
-                      background: theme === "light" ? "rgba(255,255,255,0.7)" : "rgba(24,24,27,0.6)",
-                    }}
+                    className="group relative p-2 flex items-center justify-center social-icon-link"
                     href={href}
                     aria-label={label}
-                    title={label}
                     {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
                   >
-                    <Icon className="w-[18px] h-[18px] text-cyan-400 group-hover:scale-110 transition-transform" />
+                    <Icon className="w-6 h-6" />
+                    <span className="icon-tooltip pointer-events-none absolute bottom-full left-1/2 mb-3 px-2.5 py-1 rounded-md text-[10px] font-mono tracking-wider uppercase whitespace-nowrap z-20">
+                      {label}
+                    </span>
                   </a>
                 ))}
               </div>
