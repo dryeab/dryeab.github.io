@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "../theme/ThemeContext";
 
 const links = [
-  { label: "Education", href: "#education" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },

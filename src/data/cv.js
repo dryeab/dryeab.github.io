@@ -18,7 +18,17 @@ const cv = {
           url: "https://www.usnews.com/education/best-global-universities/addis-ababa-university-529036",
         },
         "GPA: 3.71 / 4.0",
-        "Coursework: Web and Mobile Application Development, Operating System, Object Oriented Programming, Database Systems, Data Structures and Algorithms, and Fundamentals of AI.",
+      ],
+    },
+  ],
+  training: [
+    {
+      title: "Introduction to Competitive Programming, A2SV",
+      url: "https://www.a2sv.org/",
+      period: "12/2019 – 12/2020",
+      details: [
+        "Intensive competitive programming track",
+        "Cohort: 70% (31/44) pass rate at Google SWE interviews",
       ],
     },
   ],

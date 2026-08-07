@@ -1,5 +1,5 @@
 import React from "react";
-import { FiMail, FiExternalLink, FiAward, FiBookOpen, FiTerminal, FiCode } from "react-icons/fi";
+import { FiMail, FiExternalLink, FiAward, FiBookOpen, FiTerminal } from "react-icons/fi";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiLeetcode } from "react-icons/si";
@@ -30,11 +30,84 @@ function Section({ id, title, icon: Icon, children }) {
   );
 }
 
+/**
+ * Quiet counterpart to <Section>: a small margin label with the entries
+ * beside it. Used for credentials that should be on the page but shouldn't
+ * compete with Experience / Projects / Skills for attention.
+ */
+function SideNote({ id, label, entries }) {
+  return (
+    <section id={id} className="scroll-mt-24">
+      <div className="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-8">
+        <h2
+          className="text-[11px] font-bold tracking-widest uppercase font-mono shrink-0 sm:w-28"
+          style={{ color: "var(--text-muted)" }}
+        >
+          {label}
+        </h2>
+
+        <div className="flex-1 min-w-0 space-y-5">
+          {entries.map((entry) => (
+            <div key={entry.title}>
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+                <h3 className="text-sm font-semibold font-sans" style={{ color: "var(--text-primary)" }}>
+                  {entry.url ? (
+                    <a
+                      href={entry.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="transition-colors hover:text-cyan-400"
+                    >
+                      {entry.title}
+                      <FiExternalLink className="inline-block w-3 h-3 ml-1.5 align-middle -translate-y-0.5 text-cyan-400" />
+                    </a>
+                  ) : (
+                    entry.title
+                  )}
+                </h3>
+                <span className="text-[11px] font-mono shrink-0" style={{ color: "var(--text-muted)" }}>
+                  {entry.period}
+                </span>
+              </div>
+
+              <p className="mt-1.5 text-xs leading-relaxed font-sans" style={{ color: "var(--text-muted)" }}>
+                {entry.details.map((d, dIdx) => {
+                  const isObj = typeof d === "object" && d !== null;
+                  const text = isObj ? d.text : d;
+                  const url = isObj ? d.url : null;
+                  return (
+                    <React.Fragment key={dIdx}>
+                      {dIdx > 0 && <span className="mx-2 opacity-50">&middot;</span>}
+                      {url ? (
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="transition-colors hover:text-cyan-400"
+                        >
+                          {text}
+                        </a>
+                      ) : (
+                        text
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function App() {
   const {
     name,
     contact,
     education,
+    training,
     experience,
     projects,
     skills,
@@ -102,71 +175,6 @@ function App() {
               </div>
             </div>
           </section>
-
-          {/* EDUCATION SECTION */}
-          <Section id="education" title="Education" icon={FiBookOpen}>
-            <div className={`grid grid-cols-1 gap-6 ${education.length > 1 ? "md:grid-cols-2" : ""}`}>
-              {education.map((edu) => (
-                <div
-                  key={edu.title}
-                  className="glass-card rounded-2xl p-6 hover:scale-[1.01] transition-all relative overflow-hidden group"
-                  style={{ borderColor: "var(--border-default)" }}
-                >
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-500/5 to-transparent rounded-bl-full pointer-events-none" />
-
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
-                    <h4 className="text-base font-bold font-sans max-w-xl" style={{ color: "var(--text-heading)" }}>
-                      {edu.url ? (
-                        <a
-                          href={edu.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="transition-colors hover:text-cyan-500 dark:hover:text-cyan-400"
-                        >
-                          {edu.title}
-                          <FiExternalLink className="inline-block w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 ml-1.5 align-middle -translate-y-0.5" />
-                        </a>
-                      ) : (
-                        edu.title
-                      )}
-                    </h4>
-                    <span className="text-xs font-mono text-cyan-400 font-semibold whitespace-nowrap px-2 py-0.5 rounded shrink-0 self-start"
-                      style={{ background: theme === "light" ? "rgba(6,182,212,0.08)" : "rgba(6,182,212,0.12)", border: "1px solid rgba(6,182,212,0.25)" }}>
-                      {edu.period}
-                    </span>
-                  </div>
-
-                  <ul className="space-y-3 font-sans text-sm" style={{ color: "var(--text-secondary)" }}>
-                    {edu.details.map((d, dIdx) => {
-                      const isObj = typeof d === "object" && d !== null;
-                      const text = isObj ? d.text : d;
-                      const url = isObj ? d.url : null;
-                      return (
-                        <li key={dIdx} className="flex items-start gap-2.5 leading-relaxed">
-                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(6,182,212,0.6)]" />
-                          <span>
-                            {url ? (
-                              <a
-                                href={url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="transition-colors hover:text-cyan-500 dark:hover:text-cyan-400"
-                              >
-                                {text}
-                                <FiExternalLink className="inline-block w-3 h-3 text-cyan-500 dark:text-cyan-400 ml-1.5 align-middle -translate-y-0.5" />
-                              </a>
-                            ) : (
-                              text
-                            )}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </Section>
 
           {/* EXPERIENCE SECTION */}
           <Section id="experience" title="Experience" icon={FiTerminal}>
@@ -402,40 +410,6 @@ function App() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {/* A2SV Competitive Programming — featured, full width */}
-                <a
-                  href="https://www.a2sv.org/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="glass-card rounded-2xl p-6 md:p-8 md:col-span-2 flex flex-col justify-between hover:scale-[1.01] transition-all group"
-                  style={{ borderColor: "var(--border-default)" }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div
-                        className="p-2.5 rounded-xl text-cyan-400"
-                        style={{ background: "var(--bg-tag)", border: "1px solid var(--border-default)" }}
-                      >
-                        <FiCode className="w-5 h-5" />
-                      </div>
-                      <span className="text-[10px] font-mono bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-semibold">
-                        Competitive Programming
-                      </span>
-                    </div>
-                    <h3 className="text-lg md:text-xl font-bold tracking-tight font-sans flex items-center gap-1.5" style={{ color: "var(--text-heading)" }}>
-                      Introduction to Competitive Programming, A2SV
-                      <FiExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400 shrink-0" />
-                    </h3>
-                    <p className="text-xs md:text-sm mt-2 leading-relaxed font-sans max-w-3xl" style={{ color: "var(--text-secondary)" }}>
-                      A2SV upskills high-potential African students and connects them with top tech companies. Completed the intensive competitive programming track, the cohort behind a <strong style={{ color: "var(--text-primary)" }}>70% success rate (31/44)</strong> at Google software engineering interviews for summer 2019.
-                    </p>
-                  </div>
-                  <div className="mt-6 pt-4 flex items-center justify-between font-mono text-[10px]" style={{ borderTop: "1px solid var(--border-muted)", color: "var(--text-muted)" }}>
-                    <span>A2SV</span>
-                    <span className="text-cyan-400 font-semibold">12/2019 – 12/2020</span>
-                  </div>
-                </a>
-
                 {/* LeetCode Guardian Card */}
                 <a
                   href="https://leetcode.com/u/dryeab/"
@@ -591,6 +565,13 @@ function App() {
               </div>
             </div>
           </Section>
+
+
+          {/* CREDENTIALS — de-emphasized sidenotes, after the work sections */}
+          <div className="pt-10 space-y-8" style={{ borderTop: "1px solid var(--border-muted)" }}>
+            <SideNote id="education" label="Education" entries={education} />
+            <SideNote id="training" label="Training" entries={training} />
+          </div>
 
         </div>
       </main>
