@@ -11,27 +11,6 @@ const ACCENTS = {
   emerald: { hex: "#34d399", soft: "rgba(16, 185, 129, 0.07)", ring: "rgba(16, 185, 129, 0.45)", tag: "#6ee7b7" },
 };
 
-/**
- * Pull the quantitative results out of a bullet so they read at a glance:
- * "over 100", "25%", "3,000". Deliberately narrow — it only matches percentages,
- * N+ forms, "over N", and multi-digit numbers, so tokens like "A2SV", "C++"
- * and ".NET" are left alone.
- */
-const METRIC = /(\d[\d,]*(?:\.\d+)?\s*%|\b\d[\d,]*\d\+|\bover \d(?:[\d,]*\d)?|\b\d{2,}(?:,\d{3})*\b)/gi;
-
-const withMetrics = (text, color) =>
-  String(text)
-    .split(METRIC)
-    .map((part, i) =>
-      i % 2 === 1 ? (
-        <strong key={i} style={{ color, fontWeight: 600 }}>
-          {part}
-        </strong>
-      ) : (
-        part
-      )
-    );
-
 export function AccordionItem({
   title,
   subtitle,
@@ -41,7 +20,6 @@ export function AccordionItem({
   command,
   url,
   linkLabel,
-  leading,
   monoTitle = false,
   defaultOpen = false,
   timeline = false,
@@ -53,22 +31,22 @@ export function AccordionItem({
 
   return (
     <div
-      className={timeline ? "flex items-start gap-3 sm:gap-5" : "relative"}
+      className={timeline ? "flex items-start gap-4 sm:gap-5" : "relative"}
       style={{ "--accent-soft": a.soft, "--accent-ring": a.ring }}
     >
-      {/* In timeline mode the leading element IS the rail node, so it sits on
-          the spine instead of inside the card. mt matches the card's padding +
-          half the title's line-height, which is why it differs by breakpoint. */}
-      {timeline && leading && (
-        <div
-          className="shrink-0 relative z-10 mt-3.5 sm:mt-4 rounded-xl transition-all duration-300"
+      {/* Rail node. mt = card padding + half the title's line-height, so the dot
+          centres on the title at every breakpoint (20+12=32 / 24+14=38, less the
+          dot's 5px radius). */}
+      {timeline && (
+        <span
+          className="shrink-0 w-2.5 h-2.5 rounded-full border-2 relative z-10 mt-[27px] sm:mt-[33px] transition-all duration-300"
           style={{
-            transform: open ? "scale(1.06)" : "scale(1)",
+            backgroundColor: "var(--bg-base)",
+            borderColor: a.hex,
+            transform: open ? "scale(1.25)" : "scale(1)",
             boxShadow: open ? `0 0 0 4px ${a.hex}1f` : "none",
           }}
-        >
-          {leading}
-        </div>
+        />
       )}
 
       <div className="entry-card glass-card rounded-2xl overflow-hidden relative flex-1 min-w-0">
@@ -93,8 +71,6 @@ export function AccordionItem({
           aria-expanded={open}
           className="exp-toggle relative z-10 w-full text-left p-5 sm:p-6 flex items-start gap-4"
         >
-          {!timeline && leading}
-
           <div className="flex-1 min-w-0">
             <h4
               className={`text-base sm:text-lg font-bold tracking-tight ${monoTitle ? "font-mono" : "font-sans"}`}
@@ -164,7 +140,7 @@ export function AccordionItem({
                         >
                           &rsaquo;
                         </span>
-                        <span>{withMetrics(b, a.hex)}</span>
+                        <span>{b}</span>
                       </li>
                     ))}
                   </ul>
@@ -218,8 +194,8 @@ export default function AccordionList({ items, timeline = false, accent = "cyan"
 
   return (
     <div className="relative space-y-4">
-      {/* Gradient spine, centred under the rail nodes (18px / 22px half-widths) */}
-      <span className="absolute top-0 bottom-0 w-px timeline-line left-[18px] sm:left-[22px]" />
+      {/* Gradient spine, centred on the 10px rail dots (radius 5px) */}
+      <span className="absolute top-0 bottom-0 w-px timeline-line left-[5px]" />
       {items.map((item) => (
         <AccordionItem key={item.title} {...item} timeline accent={accent} />
       ))}

@@ -28,23 +28,6 @@ const tenureOf = (period) => {
   return [years ? `${years} yr` : null, rest ? `${rest} mo` : null].filter(Boolean).join(" ");
 };
 
-/**
- * Doubles as the timeline node, so it needs an opaque backdrop —
- * the gradient spine runs behind it and must not show through.
- */
-const Monogram = ({ letter }) => (
-  <span
-    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center text-sm sm:text-base font-mono font-bold text-cyan-400"
-    style={{
-      backgroundColor: "var(--bg-base)",
-      backgroundImage: "linear-gradient(145deg, rgba(6,182,212,0.18), rgba(6,182,212,0.03))",
-      border: "1px solid rgba(6,182,212,0.30)",
-    }}
-  >
-    {letter}
-  </span>
-);
-
 const Experience = ({ experience }) => {
   const items = experience.map((job) => {
     const { role, company } = splitRole(job.role);
@@ -57,7 +40,6 @@ const Experience = ({ experience }) => {
       bullets: job.bullets,
       url: job.url,
       linkLabel: `Visit ${company || "site"}`,
-      leading: <Monogram letter={(company || role).charAt(0).toUpperCase()} />,
     };
   });
 

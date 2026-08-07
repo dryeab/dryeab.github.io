@@ -167,7 +167,7 @@ function App() {
           {/* HERO SECTION */}
           <section id="about" className="scroll-mt-28 pt-4 pb-10 md:pt-10 md:pb-16">
             <div className="max-w-3xl flex flex-col space-y-6">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
                 I'm <span className="text-cyan-400">{name}</span>
               </h1>
 

@@ -175,17 +175,15 @@ html.light .glass-card-hover:hover {
   transition: color 0.2s ease;
 }
 
-/* --chip-* are set per category card in Skills.js, so each group hovers
-   in its own accent while sharing one rule. */
 .skill-chip:hover {
   color: var(--text-heading);
-  border-color: var(--chip-ring, rgba(6, 182, 212, 0.45));
-  background: var(--chip-soft, rgba(6, 182, 212, 0.08));
+  border-color: rgba(6, 182, 212, 0.45);
+  background: rgba(6, 182, 212, 0.08);
   transform: translateY(-2px);
 }
 
 .skill-chip:hover .skill-chip-icon {
-  color: var(--chip-accent, #22d3ee);
+  color: #22d3ee;
 }
 
 @media (prefers-reduced-motion: reduce) {

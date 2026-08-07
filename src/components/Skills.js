@@ -1,5 +1,5 @@
 import React from "react";
-import { FiCode, FiLayout, FiServer, FiCpu, FiTool, FiDatabase } from "react-icons/fi";
+import { FiCode, FiDatabase } from "react-icons/fi";
 import {
   SiPython,
   SiJavascript,
@@ -77,76 +77,38 @@ const ICONS = {
   Selenium: SiSelenium,
 };
 
-/**
- * Presentation for each group lives here rather than in cv.js — the data file
- * stays content-only. Colour is used sparingly: just the icon tile at rest,
- * then the chip hover state inside that card.
- * Spans compose a 6-column bento: [2 + 2 + 2] over [4 + 2].
- */
-const GROUPS = {
-  Languages: { icon: FiCode, hex: "#22d3ee", span: "lg:col-span-2" },
-  Frontend: { icon: FiLayout, hex: "#38bdf8", span: "lg:col-span-2" },
-  Backend: { icon: FiServer, hex: "#a78bfa", span: "lg:col-span-2" },
-  "AI / ML": { icon: FiCpu, hex: "#34d399", span: "lg:col-span-4" },
-  Tools: { icon: FiTool, hex: "#fbbf24", span: "lg:col-span-2" },
-};
-
-const FALLBACK = { icon: FiCode, hex: "#22d3ee", span: "lg:col-span-2" };
-
 const SkillChip = ({ name }) => {
   const Icon = ICONS[name] || FiCode;
   return (
-    <span className="skill-chip inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono">
-      <Icon className="w-3.5 h-3.5 shrink-0 skill-chip-icon" />
+    <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono">
+      <Icon className="w-3 h-3 shrink-0 skill-chip-icon" />
       <span>{name}</span>
     </span>
   );
 };
 
+/** Label in the margin, chips beside it — same layout as the SideNote credentials. */
 const Skills = ({ groups }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-6">
-    {groups.map((group) => {
-      const { icon: Icon, hex, span } = GROUPS[group.label] || FALLBACK;
-
-      return (
-        <div
-          key={group.label}
-          className={`entry-card glass-card rounded-2xl p-5 sm:p-6 flex flex-col gap-5 ${span}`}
-          style={{
-            "--chip-accent": hex,
-            "--chip-soft": `${hex}14`,
-            "--chip-ring": `${hex}73`,
-            "--accent-ring": `${hex}59`,
-            "--accent-soft": `${hex}12`,
-          }}
+  <div className="space-y-6">
+    {groups.map((group) => (
+      <div
+        key={group.label}
+        className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8"
+      >
+        <h3
+          className="shrink-0 sm:w-28 text-[11px] font-bold tracking-widest uppercase font-mono"
+          style={{ color: "var(--text-muted)" }}
         >
-          <div className="flex items-center gap-3">
-            <span
-              className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-              style={{
-                background: `${hex}1a`,
-                border: `1px solid ${hex}40`,
-                color: hex,
-              }}
-            >
-              <Icon className="w-4 h-4" />
-            </span>
-            <h3
-              className="text-[11px] font-bold tracking-widest uppercase font-mono"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              {group.label}
-            </h3>
-          </div>
+          {group.label}
+        </h3>
 
-          <div className="flex flex-wrap gap-2">
-            {group.items.map((name) => (
-              <SkillChip key={name} name={name} />
-            ))}
-          </div>
+        <div className="flex-1 flex flex-wrap gap-2">
+          {group.items.map((name) => (
+            <SkillChip key={name} name={name} />
+          ))}
         </div>
-      );
-    })}
+      </div>
+    ))}
   </div>
 );
 
