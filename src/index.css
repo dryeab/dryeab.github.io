@@ -15,7 +15,6 @@
   --bg-card-solid:    #121218;
   --bg-nav:           rgba(9, 9, 11, 0.85);
   --bg-input:         rgba(9, 9, 11, 0.7);
-  --bg-terminal-bar:  #18181b;
   --bg-tag:           #18181b;
 
   --border-subtle:    rgba(255, 255, 255, 0.05);
@@ -48,7 +47,6 @@ html.light {
   --bg-card-solid:    #ffffff;
   --bg-nav:           rgba(248, 248, 252, 0.90);
   --bg-input:         rgba(241, 241, 248, 0.80);
-  --bg-terminal-bar:  #e8e8f0;
   --bg-tag:           #ededf5;
 
   --border-subtle:    rgba(0, 0, 0, 0.07);
@@ -170,20 +168,6 @@ html.light .glass-card-hover:hover {
 }
 
 /* ────────────────────────────────────────────────
-   Animated Cursor
-──────────────────────────────────────────────── */
-.cursor-blink::after {
-  content: '|';
-  color: #00f0ff;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  from, to { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* ────────────────────────────────────────────────
    Pulse animation for node flow indicators
 ──────────────────────────────────────────────── */
 @keyframes pulse-cyan {
@@ -291,24 +275,6 @@ html.light footer {
   background: transparent !important;
 }
 html.light .footer-text { color: var(--text-muted) !important; }
-
-/* ── Console Terminal ── */
-html.light .console-wrap {
-  background: rgba(241, 241, 248, 0.9) !important;
-  border-color: var(--border-default) !important;
-}
-html.light .console-titlebar {
-  background: var(--bg-terminal-bar) !important;
-  border-bottom-color: var(--border-muted) !important;
-}
-html.light .console-titlebar-label { color: var(--text-muted) !important; }
-html.light .console-body { /* keep it scrollable */ }
-html.light .console-input-bar {
-  background: rgba(228, 228, 240, 0.7) !important;
-  border-top-color: var(--border-muted) !important;
-}
-html.light .console-text-default { color: var(--text-secondary) !important; }
-html.light .console-text-input   { color: var(--text-heading) !important; }
 
 /* ── Algo Visualizer ── */
 html.light .algo-card-bg {

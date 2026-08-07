@@ -6,7 +6,6 @@ const links = [
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
 ];
 
 /* ── Sun icon (light mode indicator) ── */
@@ -157,8 +156,7 @@ const Header = () => {
     >
       <div className="mx-auto max-w-6xl px-6 md:px-12 py-4 flex flex-row items-center justify-between">
         <div className="text-xl font-bold tracking-tight font-mono">
-          <a href="/" className="flex items-center gap-1 group">
-            <span className="text-cyan-400 group-hover:text-emerald-400 transition-colors">&lt;</span>
+          <a href="/" className="flex items-center group">
             <span
               className="font-semibold hidden sm:inline transition-colors"
               style={{ color: "var(--text-heading)" }}
@@ -171,7 +169,6 @@ const Header = () => {
             >
               YD
             </span>
-            <span className="text-cyan-400 group-hover:text-emerald-400 transition-colors">/&gt;</span>
           </a>
         </div>
 

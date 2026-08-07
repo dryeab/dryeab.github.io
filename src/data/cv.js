@@ -6,6 +6,7 @@ const cv = {
     githubUsername: "dryeab",
     linkedinUsername: "dryeab",
     leetcodeUsername: "dryeab",
+    xUsername: "dryeab",
   },
   education: [
     {
@@ -18,15 +19,6 @@ const cv = {
         },
         "GPA: 3.71 / 4.0",
         "Coursework: Web and Mobile Application Development, Operating System, Object Oriented Programming, Database Systems, Data Structures and Algorithms, and Fundamentals of AI.",
-      ],
-    },
-    {
-      title: "Introduction to Competitive Programming, A2SV",
-      url: "https://www.a2sv.org/",
-      period: "12/2019 – 12/2020",
-      details: [
-        "A2SV upskills high-potential African students, and connects with top tech companies.",
-        "A2SV students achieved 70% (31/44) success rate at Google software engineering interviews for summer 2019.",
       ],
     },
   ],

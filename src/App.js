@@ -1,11 +1,11 @@
 import React from "react";
-import { FiMail, FiExternalLink, FiAward, FiBookOpen, FiTerminal } from "react-icons/fi";
+import { FiMail, FiExternalLink, FiAward, FiBookOpen, FiTerminal, FiCode } from "react-icons/fi";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { SiLeetcode } from "react-icons/si";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import cv from "./data/cv";
-import Console from "./components/Console";
 import AlgoVisualizer from "./components/AlgoVisualizer";
 import { useTheme } from "./components/theme/ThemeContext";
 
@@ -63,70 +63,50 @@ function App() {
 
       <Header />
 
-      <main className="flex-1 relative z-10 radial-glow-bottom pt-16 md:pt-20">
-        <div className="mx-auto max-w-6xl px-6 md:px-12 pt-4 pb-10 md:pt-6 md:pb-16">
+      <main className="flex-1 relative z-10 radial-glow-bottom pt-20 md:pt-16">
+        <div className="mx-auto max-w-6xl px-6 md:px-12 pb-10 md:pb-16">
 
           {/* HERO SECTION */}
-          <section id="about" className="scroll-mt-28 pt-2 pb-6 md:pt-4 md:pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <section id="about" className="scroll-mt-28 pt-4 pb-10 md:pt-10 md:pb-16">
+            <div className="max-w-3xl flex flex-col space-y-6">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
+                I'm <span className="text-cyan-400">{name}</span>
+              </h1>
 
-              {/* Intro Card */}
-              <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
-                <div className="inline-flex items-center gap-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-[10px] sm:text-xs font-semibold font-mono tracking-widest uppercase text-emerald-400">
-                    Open for opportunities
-                  </span>
-                </div>
+              <p className="leading-relaxed text-sm sm:text-base md:text-lg max-w-2xl font-sans" style={{ color: "var(--text-secondary)" }}>
+                Software Engineer &amp; Data Scientist specializing in AI model alignment, system optimizations, and full-stack engineering. I solve complex algorithmic challenges and design scalable infrastructure.
+              </p>
 
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight font-sans" style={{ color: "var(--text-heading)" }}>
-                  I'm <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(to right, #22d3ee, #34d399)" }}>{name}</span>
-                </h1>
-
-                <p className="leading-relaxed text-sm sm:text-base md:text-lg max-w-xl font-sans" style={{ color: "var(--text-secondary)" }}>
-                  Software Engineer &amp; Data Scientist specializing in AI model alignment, system optimizations, and full-stack engineering. I solve complex algorithmic challenges and design scalable infrastructure.
-                </p>
-
-                {/* Social Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  {[
-                    { icon: FiMail, label: "Email", href: `mailto:${contact.email}` },
-                    { icon: FaLinkedinIn, label: "LinkedIn", href: `https://www.linkedin.com/in/${contact.linkedinUsername}`, external: true },
-                    { icon: FaGithub, label: "GitHub", href: `https://github.com/${contact.githubUsername}`, external: true },
-                    { icon: SiLeetcode, label: "LeetCode", href: `https://leetcode.com/${contact.leetcodeUsername}`, external: true },
-                  ].map(({ icon: Icon, label, href, external }) => (
-                    <a
-                      key={label}
-                      className="group flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border transition-all font-mono text-xs"
-                      style={{
-                        borderColor: "var(--border-default)",
-                        background: theme === "light" ? "rgba(255,255,255,0.7)" : "rgba(24,24,27,0.6)",
-                        color: "var(--text-secondary)",
-                      }}
-                      href={href}
-                      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-                    >
-                      <Icon className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-                      <span>{label}</span>
-                    </a>
-                  ))}
-                </div>
+              {/* Social Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                {[
+                  { icon: FiMail, label: "Email", href: `mailto:${contact.email}` },
+                  { icon: FaGithub, label: "GitHub", href: `https://github.com/${contact.githubUsername}`, external: true },
+                  { icon: FaXTwitter, label: "X", href: `https://x.com/${contact.xUsername}`, external: true },
+                  { icon: FaLinkedinIn, label: "LinkedIn", href: `https://www.linkedin.com/in/${contact.linkedinUsername}`, external: true },
+                ].map(({ icon: Icon, label, href, external }) => (
+                  <a
+                    key={label}
+                    className="group w-11 h-11 flex items-center justify-center rounded-xl border transition-all neon-border-cyan"
+                    style={{
+                      borderColor: "var(--border-default)",
+                      background: theme === "light" ? "rgba(255,255,255,0.7)" : "rgba(24,24,27,0.6)",
+                    }}
+                    href={href}
+                    aria-label={label}
+                    title={label}
+                    {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+                  >
+                    <Icon className="w-[18px] h-[18px] text-cyan-400 group-hover:scale-110 transition-transform" />
+                  </a>
+                ))}
               </div>
-
-              {/* Interactive Console Terminal */}
-              <div className="lg:col-span-5 w-full">
-                <Console />
-              </div>
-
             </div>
           </section>
 
           {/* EDUCATION SECTION */}
           <Section id="education" title="Education" icon={FiBookOpen}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className={`grid grid-cols-1 gap-6 ${education.length > 1 ? "md:grid-cols-2" : ""}`}>
               {education.map((edu) => (
                 <div
                   key={edu.title}
@@ -136,7 +116,7 @@ function App() {
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-500/5 to-transparent rounded-bl-full pointer-events-none" />
 
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-4">
-                    <h4 className="text-base font-bold font-sans max-w-xs" style={{ color: "var(--text-heading)" }}>
+                    <h4 className="text-base font-bold font-sans max-w-xl" style={{ color: "var(--text-heading)" }}>
                       {edu.url ? (
                         <a
                           href={edu.url}
@@ -423,6 +403,40 @@ function App() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+                {/* A2SV Competitive Programming — featured, full width */}
+                <a
+                  href="https://www.a2sv.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass-card rounded-2xl p-6 md:p-8 md:col-span-2 flex flex-col justify-between hover:scale-[1.01] transition-all group"
+                  style={{ borderColor: "var(--border-default)" }}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div
+                        className="p-2.5 rounded-xl text-cyan-400"
+                        style={{ background: "var(--bg-tag)", border: "1px solid var(--border-default)" }}
+                      >
+                        <FiCode className="w-5 h-5" />
+                      </div>
+                      <span className="text-[10px] font-mono bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-semibold">
+                        Competitive Programming
+                      </span>
+                    </div>
+                    <h3 className="text-lg md:text-xl font-bold tracking-tight font-sans flex items-center gap-1.5" style={{ color: "var(--text-heading)" }}>
+                      Introduction to Competitive Programming, A2SV
+                      <FiExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400 shrink-0" />
+                    </h3>
+                    <p className="text-xs md:text-sm mt-2 leading-relaxed font-sans max-w-3xl" style={{ color: "var(--text-secondary)" }}>
+                      A2SV upskills high-potential African students and connects them with top tech companies. Completed the intensive competitive programming track, the cohort behind a <strong style={{ color: "var(--text-primary)" }}>70% success rate (31/44)</strong> at Google software engineering interviews for summer 2019.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 flex items-center justify-between font-mono text-[10px]" style={{ borderTop: "1px solid var(--border-muted)", color: "var(--text-muted)" }}>
+                    <span>A2SV</span>
+                    <span className="text-cyan-400 font-semibold">12/2019 – 12/2020</span>
+                  </div>
+                </a>
+
                 {/* LeetCode Guardian Card */}
                 <a
                   href="https://leetcode.com/u/dryeab/"
@@ -575,59 +589,6 @@ function App() {
                   </div>
                 </div>
 
-              </div>
-            </div>
-          </Section>
-
-          {/* CONTACT SECTION */}
-          <Section id="contact" title="Contact" icon={FiMail}>
-            <div className="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden" style={{ borderColor: "var(--border-default)" }}>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-cyan-500/5 to-transparent rounded-tl-full pointer-events-none" />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div>
-                  <div className="text-[10px] font-semibold font-mono tracking-widest uppercase text-cyan-400 mb-1">
-                    Let's collaborate
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight font-sans" style={{ color: "var(--text-heading)" }}>
-                    Get In Touch
-                  </h3>
-                  <p className="text-sm mt-2 leading-relaxed font-sans max-w-sm" style={{ color: "var(--text-secondary)" }}>
-                    Have an interesting project, alignment challenge, or engineering role? Drop me a message. Let's build something exceptional.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="group p-4 rounded-xl transition-all flex flex-col justify-between"
-                    style={{
-                      border: "1px solid var(--border-default)",
-                      background: "var(--bg-tag)",
-                    }}
-                  >
-                    <div className="text-xs font-mono uppercase" style={{ color: "var(--text-muted)" }}>Email</div>
-                    <div className="text-sm font-bold mt-2 font-sans break-all group-hover:text-cyan-400 transition-colors" style={{ color: "var(--text-heading)" }}>
-                      {contact.email}
-                    </div>
-                  </a>
-
-                  <a
-                    href={`https://www.linkedin.com/in/${contact.linkedinUsername}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group p-4 rounded-xl transition-all flex flex-col justify-between"
-                    style={{
-                      border: "1px solid var(--border-default)",
-                      background: "var(--bg-tag)",
-                    }}
-                  >
-                    <div className="text-xs font-mono uppercase" style={{ color: "var(--text-muted)" }}>LinkedIn</div>
-                    <div className="text-sm font-bold mt-2 font-sans break-all group-hover:text-cyan-400 transition-colors" style={{ color: "var(--text-heading)" }}>
-                      {contact.linkedinUsername}
-                    </div>
-                  </a>
-                </div>
               </div>
             </div>
           </Section>
