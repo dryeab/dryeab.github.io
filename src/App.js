@@ -31,7 +31,7 @@ function SectionHeading({ title, icon: Icon, accent = "#22d3ee" }) {
       )}
 
       <h2
-        className="text-lg md:text-xl font-bold tracking-widest uppercase font-mono"
+        className="text-lg md:text-xl font-bold tracking-wide font-mono"
         style={{ color: "var(--text-heading)" }}
       >
         {title}
@@ -66,7 +66,7 @@ function SideNote({ id, label, entries }) {
     <section id={id} className="scroll-mt-24">
       <div className="flex flex-col sm:flex-row sm:items-baseline gap-3 sm:gap-8">
         <h2
-          className="text-[11px] font-bold tracking-widest uppercase font-mono shrink-0 sm:w-28"
+          className="text-[11px] font-bold tracking-wide font-mono shrink-0 sm:w-28"
           style={{ color: "var(--text-muted)" }}
         >
           {label}
@@ -192,7 +192,7 @@ function App() {
                     rel="noreferrer"
                   >
                     <Icon className="w-6 h-6" />
-                    <span className="icon-tooltip pointer-events-none absolute bottom-full left-1/2 mb-3 px-2.5 py-1 rounded-md text-[10px] font-mono tracking-wider uppercase whitespace-nowrap z-20">
+                    <span className="icon-tooltip pointer-events-none absolute bottom-full left-1/2 mb-3 px-2.5 py-1 rounded-md text-[10px] font-mono tracking-wide whitespace-nowrap z-20">
                       {label}
                     </span>
                   </a>

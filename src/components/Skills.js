@@ -96,7 +96,7 @@ const Skills = ({ groups }) => (
         className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-8"
       >
         <h3
-          className="shrink-0 sm:w-24 text-[10px] font-bold tracking-widest uppercase font-mono"
+          className="shrink-0 sm:w-24 text-[11px] font-bold tracking-wide font-mono"
           style={{ color: "var(--text-muted)" }}
         >
           {group.label}
