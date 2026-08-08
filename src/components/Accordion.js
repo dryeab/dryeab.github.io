@@ -47,11 +47,11 @@ export function AccordionItem({
       style={{ "--accent-soft": tone.soft, "--accent-ring": tone.ring }}
     >
       {/* Rail node. mt = card padding + half the title's line-height, so the dot
-          centres on the title at every breakpoint (16+12=28 / 20+14=34, less the
+          centres on the title at every breakpoint (12+10=22 / 14+12=26, less the
           dot's 5px radius). */}
       {timeline && (
         <span
-          className="shrink-0 w-2.5 h-2.5 rounded-full border-2 relative z-10 mt-[23px] sm:mt-[29px] transition-all duration-300"
+          className="shrink-0 w-2.5 h-2.5 rounded-full border-2 relative z-10 mt-[17px] sm:mt-[21px] transition-all duration-300"
           style={{
             backgroundColor: "var(--bg-base)",
             borderColor: tone.hex,
@@ -81,11 +81,13 @@ export function AccordionItem({
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="exp-toggle relative z-10 w-full text-left p-4 sm:p-5 flex items-start gap-3"
+          className="exp-toggle relative z-10 w-full text-left px-4 py-3 sm:px-5 sm:py-3.5 flex items-start gap-3"
         >
-          <div className="flex-1 min-w-0">
+          {/* Title, subtitle and meta share one wrapping row: a single line on
+              desktop (meta pushed right), stacked on narrow screens. */}
+          <div className="flex-1 min-w-0 flex flex-wrap items-baseline gap-x-2 gap-y-1">
             <h4
-              className={`text-base sm:text-lg font-bold tracking-tight ${
+              className={`text-sm sm:text-base font-bold tracking-tight ${
                 monoTitle ? "font-mono" : "font-sans"
               }`}
               style={{ color: "var(--text-heading)" }}
@@ -93,50 +95,34 @@ export function AccordionItem({
               {title}
             </h4>
 
-            {(subtitle || meta) && (
-              <div className="mt-1 flex flex-wrap items-center gap-x-2 text-xs font-mono">
-                {subtitle && (
-                  <span className="font-semibold" style={{ color: tone.hex }}>
-                    {subtitle}
-                  </span>
-                )}
-                {subtitle && meta && (
-                  <span className="opacity-40" style={{ color: "var(--text-muted)" }}>
-                    &middot;
-                  </span>
-                )}
-                {meta && <span style={{ color: "var(--text-muted)" }}>{meta}</span>}
-              </div>
+            {subtitle && (
+              <span className="text-xs font-mono font-semibold" style={{ color: tone.hex }}>
+                <span className="opacity-40 mr-2" style={{ color: "var(--text-muted)" }}>
+                  &middot;
+                </span>
+                {subtitle}
+              </span>
             )}
 
-            {tags?.length > 0 && (
-              <div className="mt-2.5 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] font-mono px-2 py-0.5 rounded"
-                    style={{
-                      background: "var(--bg-tag)",
-                      border: "1px solid var(--border-default)",
-                      color: tone.tag,
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+            {meta && (
+              <span
+                className="text-[11px] font-mono w-full sm:w-auto sm:ml-auto sm:pl-2"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {meta}
+              </span>
             )}
           </div>
 
           <span
-            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300"
+            className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center transition-all duration-300"
             style={{
               border: "1px solid var(--border-default)",
               color: open ? tone.hex : "var(--text-muted)",
               transform: open ? "rotate(180deg)" : "rotate(0deg)",
             }}
           >
-            <FiChevronDown className="w-4 h-4" />
+            <FiChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </span>
         </button>
 
@@ -150,8 +136,8 @@ export function AccordionItem({
           }}
         >
           <div className="overflow-hidden">
-            <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-              <div className="pt-3.5" style={{ borderTop: "1px solid var(--border-muted)" }}>
+            <div className="px-4 sm:px-5 pb-4">
+              <div className="pt-3" style={{ borderTop: "1px solid var(--border-muted)" }}>
                 {children || (
                   <ul
                     className="space-y-2 text-sm font-sans"
@@ -171,9 +157,29 @@ export function AccordionItem({
                   </ul>
                 )}
 
+                {/* Tags live in the panel rather than the collapsed header — they
+                    are supporting detail, not what identifies the entry. */}
+                {tags?.length > 0 && (
+                  <div className="mt-3.5 flex flex-wrap gap-1.5">
+                    {tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] font-mono px-2 py-0.5 rounded"
+                        style={{
+                          background: "var(--bg-tag)",
+                          border: "1px solid var(--border-default)",
+                          color: tone.tag,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 {command && (
                   <div
-                    className="mt-4 flex items-center gap-2.5 rounded-lg px-3 py-2.5 font-mono text-xs overflow-x-auto"
+                    className="mt-3.5 flex items-center gap-2.5 rounded-lg px-3 py-2 font-mono text-xs overflow-x-auto"
                     style={{
                       background: "var(--bg-surface)",
                       border: "1px solid var(--border-default)",
@@ -191,7 +197,7 @@ export function AccordionItem({
                     href={url}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-mono transition-opacity hover:opacity-70"
+                    className="mt-3.5 inline-flex items-center gap-1.5 text-[11px] font-mono transition-opacity hover:opacity-70"
                     style={{ color: tone.hex }}
                   >
                     <span>{linkLabel || "Visit site"}</span>
@@ -213,7 +219,7 @@ export function AccordionItem({
  */
 export default function AccordionList({ items, timeline = false, accent = "cyan" }) {
   return (
-    <div className={timeline ? "relative space-y-3" : "space-y-3"}>
+    <div className={timeline ? "relative space-y-2.5" : "space-y-2.5"}>
       {/* Gradient spine, centred on the 10px rail dots (radius 5px) */}
       {timeline && <span className="absolute top-0 bottom-0 w-px timeline-line left-[5px]" />}
 
