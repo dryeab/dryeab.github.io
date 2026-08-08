@@ -50,22 +50,22 @@ const ExternalLink = ({ href, className, children }) => (
  */
 function SectionHeading({ title, icon: Icon, accent }) {
   return (
-    <div className="mb-6 flex items-center gap-4">
+    <div className="mb-5 flex items-center gap-3">
       {Icon && (
         <span
-          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
           style={{
             background: `${accent}1a`,
             border: `1px solid ${accent}40`,
             color: accent,
           }}
         >
-          <Icon className="w-[18px] h-[18px]" />
+          <Icon className="w-4 h-4" />
         </span>
       )}
 
       <h2
-        className="text-lg md:text-xl font-bold tracking-wide font-mono"
+        className="text-sm md:text-base font-bold tracking-wide font-mono"
         style={{ color: "var(--text-heading)" }}
       >
         {title}
@@ -85,7 +85,7 @@ function Section({ id, title, icon, accent, children }) {
   return (
     <section
       id={id}
-      className="scroll-mt-24 py-10 md:py-12"
+      className="scroll-mt-24 py-7 md:py-8"
       style={{ borderTop: "1px solid var(--border-muted)" }}
     >
       <SectionHeading title={title} icon={icon} accent={accent} />
@@ -150,7 +150,7 @@ function SideNote({ id, label, entries }) {
           {label}
         </h2>
 
-        <div className="flex-1 min-w-0 space-y-5">
+        <div className="flex-1 min-w-0 space-y-4">
           {entries.map((entry) => (
             <SideNoteEntry key={entry.title} entry={entry} />
           ))}
@@ -162,17 +162,17 @@ function SideNote({ id, label, entries }) {
 
 function Hero() {
   return (
-    <section id="about" className="scroll-mt-28 pt-4 pb-8 md:pt-10 md:pb-12">
-      <div className="max-w-3xl flex flex-col space-y-6">
+    <section id="about" className="scroll-mt-28 pt-2 pb-6 md:pt-6 md:pb-8">
+      <div className="max-w-3xl flex flex-col space-y-4">
         <h1
-          className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight font-sans"
+          className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-tight font-sans"
           style={{ color: "var(--text-heading)" }}
         >
           I'm <span className="text-cyan-400">{name}</span>
         </h1>
 
         <p
-          className="leading-relaxed text-sm sm:text-base md:text-lg max-w-2xl about-text"
+          className="leading-relaxed text-sm md:text-[15px] max-w-2xl about-text"
           style={{ color: "var(--text-secondary)" }}
         >
           Software Engineer &amp; Data Scientist specializing in AI model alignment, system
@@ -180,7 +180,7 @@ function Hero() {
           scalable infrastructure.
         </p>
 
-        <div className="flex flex-wrap items-center gap-2 pt-3 -ml-2">
+        <div className="flex flex-wrap items-center gap-1 pt-1 -ml-2">
           {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
             <a
               key={label}
@@ -190,7 +190,7 @@ function Hero() {
               target="_blank"
               rel="noreferrer"
             >
-              <Icon className="w-6 h-6" />
+              <Icon className="w-[18px] h-[18px]" />
               <span className="icon-tooltip pointer-events-none absolute bottom-full left-1/2 mb-3 px-2.5 py-1 rounded-md text-[10px] font-mono tracking-wide whitespace-nowrap z-20">
                 {label}
               </span>
@@ -224,8 +224,8 @@ function App() {
 
       <Header />
 
-      <main className="flex-1 relative z-10 radial-glow-bottom pt-20 md:pt-16">
-        <div className="mx-auto max-w-6xl px-6 md:px-12 pb-10 md:pb-16">
+      <main className="flex-1 relative z-10 radial-glow-bottom pt-20 md:pt-14">
+        <div className="mx-auto max-w-6xl px-6 md:px-12 pb-8 md:pb-10">
           <Hero />
 
           <Section id="experience" title="Work Experience" icon={FiBriefcase} accent="#22d3ee">
@@ -241,7 +241,7 @@ function App() {
           </Section>
 
           {/* Credentials — de-emphasized sidenotes, after the work sections */}
-          <div className="pt-10 space-y-6" style={{ borderTop: "1px solid var(--border-muted)" }}>
+          <div className="pt-7 space-y-5" style={{ borderTop: "1px solid var(--border-muted)" }}>
             <SideNote id="education" label="Education" entries={education} />
             <SideNote id="training" label="Training" entries={training} />
             <SideNote id="awards" label="Awards & Activities" entries={awards} />

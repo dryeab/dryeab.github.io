@@ -315,65 +315,33 @@ html.light .icon-tooltip {
 
 /* ────────────────────────────────────────────────
    Accordion entries (Experience + Projects)
-   Accent colours come from --accent-soft / --accent-ring, set per item in
-   Accordion.js, so Experience (cyan) and Projects (emerald) share this CSS.
+   --accent is set per item in Accordion.js, so Experience (cyan) and
+   Projects (emerald) share this CSS.
 ──────────────────────────────────────────────── */
-.glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-  transition: var(--transition-theme);
-}
-
-.entry-card {
-  border: 1px solid var(--border-default);
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
-}
-
-.entry-card:hover {
-  border-color: var(--accent-ring, rgba(6, 182, 212, 0.45));
-  box-shadow:
-    0 0 0 1px var(--accent-soft, transparent),
-    0 8px 28px -12px var(--accent-ring, transparent);
-  transform: translateY(-2px);
+/* Entries are hairline-separated rows rather than boxes — the accent rail on
+   the open one carries the state. */
+.entry-card + .entry-card {
+  border-top: 1px solid var(--border-muted);
 }
 
 .exp-toggle {
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background 0.2s ease;
 }
 
 .exp-toggle:hover {
-  background: var(--accent-soft, rgba(6, 182, 212, 0.05));
+  background: var(--bg-card);
 }
 
 .exp-toggle:focus-visible {
-  outline: 2px solid var(--accent-ring, rgba(6, 182, 212, 0.6));
+  outline: 2px solid var(--accent);
   outline-offset: -2px;
 }
 
-.timeline-line {
-  background: linear-gradient(
-    to bottom,
-    rgba(6, 182, 212, 0.5) 0%,
-    rgba(16, 185, 129, 0.5) 50%,
-    rgba(39, 39, 42, 0.2) 100%
-  );
-}
-
+/* Snap the panel open instead of animating its height */
 @media (prefers-reduced-motion: reduce) {
-  .entry-card,
-  .entry-card:hover {
-    transform: none;
-  }
-
-  /* Snap the panel open instead of animating its height */
   .exp-panel {
     transition: none !important;
   }

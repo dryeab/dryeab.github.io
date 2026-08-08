@@ -42,7 +42,7 @@ const Experience = ({ experience }) => {
     };
   });
 
-  return <AccordionList items={items} timeline accent="cyan" />;
+  return <AccordionList items={items} accent="cyan" />;
 };
 
 export default Experience;
